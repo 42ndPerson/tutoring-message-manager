@@ -4,7 +4,7 @@ import java.awt.Component;
 
 import javax.swing.JLabel;
 
-import com.fariseducation.Data.ObservedData.ObservedGenericImmutable;
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
 
 public class UILabel extends UITextElement {
     private JLabel label;
@@ -12,7 +12,7 @@ public class UILabel extends UITextElement {
     public UILabel(String text) {
         super(text);
     }
-    public UILabel(ObservedGenericImmutable<String> observedString) {
+    public UILabel(ObservedGeneric<String> observedString) {
         super(observedString);
     }
 

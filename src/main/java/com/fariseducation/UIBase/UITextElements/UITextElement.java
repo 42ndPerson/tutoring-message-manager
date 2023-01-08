@@ -1,17 +1,17 @@
 package com.fariseducation.UIBase.UITextElements;
 
 import com.fariseducation.Data.ObservedData.DataObserver;
-import com.fariseducation.Data.ObservedData.ObservedGenericImmutable;
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
 import com.fariseducation.UIBase.UIComponent;
 
 public abstract class UITextElement extends UIComponent implements DataObserver {
-    private ObservedGenericImmutable<String> observedString = null;
+    private ObservedGeneric<String> observedString = null;
     private UITextFormat format = new UITextFormat(false, false, 0, false);
 
     public UITextElement(String text) {
-        this(new ObservedGenericImmutable<String>(text));
+        this(new ObservedGeneric<String>(text));
     }    
-    public UITextElement(ObservedGenericImmutable<String> observedString) {
+    public UITextElement(ObservedGeneric<String> observedString) {
         this.observedString = observedString;
         this.observedString.addObserver(this);
         build();
@@ -34,7 +34,7 @@ public abstract class UITextElement extends UIComponent implements DataObserver 
         return this.format;
     }
 
-    protected ObservedGenericImmutable<String> getObservedString() {
+    protected ObservedGeneric<String> getObservedString() {
         return this.observedString;
     }
 

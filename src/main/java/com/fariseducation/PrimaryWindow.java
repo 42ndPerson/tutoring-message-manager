@@ -12,8 +12,7 @@ import com.fariseducation.Data.Tutor;
 
 import com.fariseducation.Data.Guardian;
 import com.fariseducation.Data.ObservedData.DataManager;
-import com.fariseducation.Data.ObservedData.ObservedGenericImmutable;
-import com.fariseducation.Data.ObservedData.ObservedUUID;
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
 import com.fariseducation.UIBase.UIAlert;
 import com.fariseducation.UIBase.UIComponent;
 import com.fariseducation.UIBase.UIGroup;
@@ -25,8 +24,8 @@ import com.fariseducation.UIBase.UISpacer;
 import com.fariseducation.UIBase.UIToggle;
 
 public class PrimaryWindow {
-    private ObservedGenericImmutable<TimeGroup> selectedTimeGroup = new ObservedGenericImmutable<TimeGroup>(TimeGroup.BLANK);
-    private ObservedGenericImmutable<Student> selectedStudent = new ObservedGenericImmutable<Student>(Student.BLANK);
+    private ObservedGeneric<TimeGroup> selectedTimeGroup = new ObservedGeneric<TimeGroup>(TimeGroup.BLANK);
+    private ObservedGeneric<Student> selectedStudent = new ObservedGeneric<Student>(Student.BLANK);
 
     //private ObservedLockedList<TimeGroup> timeGroups = DataManager.getInstance().getTimeGroups();
     //private ObservedLockedList<Student> filteredStudents = DataManager.getInstance().getStudents();
@@ -84,7 +83,7 @@ public class PrimaryWindow {
                                         new UIButton(val.getName(), true),
                                         new UIIndicator<ObservedUUID>(
                                             new ObservedUUID(val.getUUID()), 
-                                            new ObservedUUID(this.selectedTimeGroup.getVal().getUUID()), 
+                                            new ObservedUUID(this.selectedTimeGroup..getUUID()), 
                                             50, 
                                             50)
                                     });
@@ -117,7 +116,7 @@ public class PrimaryWindow {
                                         new UIButton(val.getName(), true),
                                         new UIIndicator<ObservedUUID>(
                                             new ObservedUUID(val.getUUID()), 
-                                            new ObservedUUID(this.selectedTimeGroup.getVal().getUUID()), 
+                                            new ObservedUUID(this.selectedTimeGroup..getUUID()), 
                                             50, 
                                             50)
                                     });

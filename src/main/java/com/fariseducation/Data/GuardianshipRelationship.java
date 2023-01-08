@@ -1,18 +1,20 @@
 package com.fariseducation.Data;
 
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
+
 public class GuardianshipRelationship extends ManagedDataSource {
-    private Guardian guardian;
-    private Student student;
+    private ObservedGeneric<Guardian> guardian;
+    private ObservedGeneric<Student> student;
 
     public GuardianshipRelationship(Guardian guardian, Student student) {
-        this.guardian = guardian;
-        this.student = student;
+        this.guardian = new ObservedGeneric<Guardian>(guardian);
+        this.student = new ObservedGeneric<Student>(student);
     }
 
-    public Guardian getGuardian() {
+    public ObservedGeneric<Guardian> getGuardian() {
         return this.guardian;
     }
-    public Student getStudent() {
+    public ObservedGeneric<Student> getStudent() {
         return this.student;
     }
 

@@ -17,6 +17,17 @@ public class ObservedDate extends ObservedDatum {
         update();
     }
 
+    public boolean isAfter(ObservedDate date) {
+        return this.date.isAfter(date.date);
+    }
+    public boolean isBefore(ObservedDate date) {
+        return this.date.isBefore(date.date);
+    }
+
+    public static ObservedDate of(int y, int m, int dom) {
+        return new ObservedDate(LocalDate.of(y, m, dom));
+    }
+
     @Override
     public boolean equals(Object o) {
         if(o instanceof ObservedDate) return this.date.equals(((ObservedDate)o).date);

@@ -1,33 +1,31 @@
 package com.fariseducation.Data;
 
-import java.time.LocalDate;
-
 import com.fariseducation.Data.ObservedData.ObservedDate;
-import com.fariseducation.Data.ObservedData.ObservedGenericImmutable;
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
 
 public class Session extends ManagedDataSource {
-    private ObservedGenericImmutable<Student> student;
-    private ObservedGenericImmutable<Tutor> tutor;
+    private ObservedGeneric<Student> student;
+    private ObservedGeneric<Tutor> tutor;
     private ObservedDate date;
-    private ObservedGenericImmutable<Double> hoursDuration;
+    private ObservedGeneric<Double> hoursDuration;
 
-    public Session(Student student, Tutor tutor, LocalDate date, double hoursDuration) {
-        this.student = new ObservedGenericImmutable<Student>(student);
-        this.tutor = new ObservedGenericImmutable<Tutor>(tutor);
-        this.date = new ObservedDate(date);
-        this.hoursDuration = new ObservedGenericImmutable<Double>(hoursDuration);
+    public Session(Student student, Tutor tutor, ObservedDate date, double hoursDuration) {
+        this.student = new ObservedGeneric<Student>(student);
+        this.tutor = new ObservedGeneric<Tutor>(tutor);
+        this.date = date;
+        this.hoursDuration = new ObservedGeneric<Double>(hoursDuration);
     }
 
-    public ObservedGenericImmutable<Student> getStudent() {
+    public ObservedGeneric<Student> getStudent() {
         return this.student;
     }
-    public ObservedGenericImmutable<Tutor> getTutor() {
+    public ObservedGeneric<Tutor> getTutor() {
         return this.tutor;
     }
     public ObservedDate getDate() {
         return this.date;
     }
-    public ObservedGenericImmutable<Double> getHoursDuration() {
+    public ObservedGeneric<Double> getHoursDuration() {
         return this.hoursDuration;
     }
 

@@ -127,7 +127,7 @@ public class DataManager {
         return (ObservedLockedList<TimeGroup>)this.timeGroups;
     }
 
-    public ObservedLiveList<Session> getSessionsForStudent(ObservedGenericImmutable<Student> student) {
+    public ObservedLiveList<Session> getSessionsForStudent(ObservedGeneric<Student> student) {
         return new ObservedLiveList<Session>(
             new ObservedDatum[]{student},
             DataManager.getInstance()::getSessions, 
@@ -135,52 +135,55 @@ public class DataManager {
                 return student.getVal()==session.getStudent().getVal();
             });
     }
-    public ObservedLiveList<Guardian> getGuardiansForStudent(ObservedGenericImmutable<Student> student) {
+    public ObservedLiveList<Guardian> getGuardiansForStudent(ObservedGeneric<Student> student) {
         return new ObservedLiveList<Guardian>(
             new ObservedDatum[]{student},
             DataManager.getInstance()::getGuardians, 
             (Guardian guardian) -> {
                 for(GuardianshipRelationship gr : DataManager.getInstance().getGuardianshipRelationships()) {
-                    if(gr.getGuardian()==guardian && gr.getStudent()==student.getVal()) return true;
+                    if(gr.getGuardian().getVal()==guardian && gr.getStudent()==student) return true;
                 }
                 return false;
             });
     }
-    public ObservedLiveList<GuardianshipRelationship> getGuardianshipRealtionshipsForStudent(ObservedGenericImmutable<Student> student) {
+    public ObservedLiveList<GuardianshipRelationship> getGuardianshipRealtionshipsForStudent(ObservedGeneric<Student> student) {
         return new ObservedLiveList<GuardianshipRelationship>(
             new ObservedDatum[]{student},
             DataManager.getInstance()::getGuardianshipRelationships, 
             (GuardianshipRelationship gr) -> {
-                return gr.getStudent()==student.getVal();
+                return student.getVal()==gr.getStudent().getVal();
             });
     }
-    public ObservedLiveList<Tutor> getTutorsForStudent(ObservedGenericImmutable<Student> student) {
+    public ObservedLiveList<Tutor> getTutorsForStudent(ObservedGeneric<Student> student) {
         return new ObservedLiveList<Tutor>(
             new ObservedDatum[]{student},
             DataManager.getInstance()::getTutors, 
             (Tutor tutor) -> {
                 for(Session session : DataManager.getInstance().getSessions()) {
-                    if(session.getTutor().getVal()==tutor && session.getStudent()==student) return true;
+                    if(tutor==session.getTutor().getVal() && student.getVal()==session.getStudent().getVal()) return true;
                 }
                 return false;
             });
     }
     public ObservedLiveList<Tutor> getTutorsForTimeGroup(
-        ObservedGenericImmutable<TimeGroup> timeGroup, 
-        ObservedGenericImmutable<Student> student) 
+        ObservedGeneric<TimeGroup> timeGroup, 
+        ObservedGeneric<Student> student) 
     {
         return new ObservedLiveList<Tutor>(
             new ObservedDatum[]{timeGroup, student},
             DataManager.getInstance()::getTutors, 
             (Tutor tutor) -> {
                 for(Session session : DataManager.getInstance().getSessions()) {
-                    if(session.getTutor().getVal()==tutor && session.getStudent()==student && timeGroup.getVal().containsSession(session)) return true;
+                    if(
+                        tutor==session.getTutor().getVal() && 
+                        student.getVal()==session.getStudent().getVal() && 
+                        timeGroup.getVal().containsSession(session)) return true;
                 }
                 return false;
             });
     }
 
-    public ObservedLiveList<Session> getSessionsInTimeGroup(ObservedGenericImmutable<TimeGroup> timeGroup) {
+    public ObservedLiveList<Session> getSessionsInTimeGroup(ObservedGeneric<TimeGroup> timeGroup) {
         return new ObservedLiveList<Session>(
             new ObservedDatum[]{timeGroup},
             DataManager.getInstance()::getSessions, 
@@ -188,13 +191,13 @@ public class DataManager {
                 return timeGroup.getVal().containsSession(session);
             });
     }
-    public ObservedLiveList<Student> getStudentsForTimeGroup(ObservedGenericImmutable<TimeGroup> timeGroup) {
+    public ObservedLiveList<Student> getStudentsForTimeGroup(ObservedGeneric<TimeGroup> timeGroup) {
         return new ObservedLiveList<Student>(
             new ObservedDatum[]{timeGroup},
             DataManager.getInstance()::getStudents, 
             (Student student) -> {
                 for(Session session : DataManager.getInstance().getSessions()) {
-                    if(timeGroup.getVal().containsSession(session) && session.getStudent().getVal()==student) return true;
+                    if(student==session.getStudent().getVal() && timeGroup.getVal().containsSession(session)) return true;
                 }
                 return false;
             });

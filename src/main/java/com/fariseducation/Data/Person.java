@@ -1,36 +1,35 @@
 package com.fariseducation.Data;
 
-import com.fariseducation.Data.ObservedData.DataObserver;
-import com.fariseducation.Data.ObservedData.ObservedGenericImmutable;
-
-public abstract class Person extends ManagedDataSource implements DataObserver {
-    private ObservedGenericImmutable<String> firstName;
-    private ObservedGenericImmutable<String> lastName;
-    private ObservedGenericImmutable<String> fullName;
+public abstract class Person extends ManagedDataSource {
+    private String firstName;
+    private String lastName;
+    private String fullName;
 
     public Person(String fn, String ln) {
         super();
 
-        this.firstName = new ObservedGenericImmutable<String>(fn);
-        this.lastName = new ObservedGenericImmutable<String>(ln);
-        this.fullName = new ObservedGenericImmutable<String>(fn + " " + ln);
+        this.firstName = fn;
+        this.lastName = ln;
+        this.fullName = fn + " " + ln;
     }
 
-    public ObservedGenericImmutable<String> getName() {
+    public String getName() {
         return fullName;
     }
 
-    public ObservedGenericImmutable<String> getFirstName() {
+    public String getFirstName() {
         return this.firstName;
     }
     public void setFirstName(String fn) {
-        this.firstName.setVal(fn);
+        this.firstName = fn;
+        update();
     }
-    public ObservedGenericImmutable<String> getLastName() {
+    public String getLastName() {
         return this.lastName;
     }
     public void setLastName(String ln) {
-        this.firstName.setVal(ln);
+        this.firstName = ln;
+        update();
     }
 
     @Override
@@ -44,10 +43,5 @@ public abstract class Person extends ManagedDataSource implements DataObserver {
         }
         
         return false;
-    }
-
-    @Override
-    public void updateAfterDataChange() {
-        this.fullName.setVal(this.firstName.getVal() + " " + this.lastName.getVal());
     }
 }

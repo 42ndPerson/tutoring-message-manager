@@ -1,33 +1,25 @@
 package com.fariseducation.Data;
 
-import java.time.LocalDate;
-
-import com.fariseducation.Data.ObservedData.DataManager;
 import com.fariseducation.Data.ObservedData.ObservedDate;
-import com.fariseducation.Data.ObservedData.ObservedGenericImmutable;
-import com.fariseducation.Data.ObservedData.ObservedLiveList;
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
 
 public class TimeGroup extends ManagedDataSource {
     public static TimeGroup BLANK = new TimeGroup(
         "", 
-        LocalDate.of(0, 1, 1), 
-        LocalDate.of(0, 1, 1));
+        ObservedDate.of(0, 1, 1), 
+        ObservedDate.of(0, 1, 1));
 
-    private ObservedGenericImmutable<String> name;
+    private ObservedGeneric<String> name;
     private ObservedDate startDate;
     private ObservedDate endDate;
 
-    public TimeGroup(String name, LocalDate startDate, LocalDate endDate) {
-        this.name = new ObservedGenericImmutable<String>(name);
-        this.startDate = new ObservedDate(startDate);
-        this.endDate = new ObservedDate(endDate);
-
-        /*GregorianCalendar gc = new GregorianCalendar();
-        gc.set(0, 0, 0);
-        gc.getTime();*/
+    public TimeGroup(String name, ObservedDate startDate, ObservedDate endDate) {
+        this.name = new ObservedGeneric<String>(name);
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public ObservedGenericImmutable<String> getName() {
+    public ObservedGeneric<String> getName() {
         return this.name;
     }
     public ObservedDate getStartDate() {
@@ -37,8 +29,8 @@ public class TimeGroup extends ManagedDataSource {
         return this.endDate;
     }
 
-    public boolean isDateInRange(LocalDate date) {
-        return date.isAfter(this.startDate.getDate()) && date.isBefore(this.endDate.getDate());
+    public boolean isDateInRange(ObservedDate date) {
+        return date.isAfter(this.startDate) && date.isBefore(this.endDate);
     }
     public boolean containsSession(Session session) {
         return isDateInRange(session.getDate());

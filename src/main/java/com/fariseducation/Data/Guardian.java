@@ -1,23 +1,22 @@
 package com.fariseducation.Data;
 
-import com.fariseducation.Data.ObservedData.ObservedBoolean;
-import com.fariseducation.Data.ObservedData.ObservedGenericImmutable;
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
 
 public class Guardian extends Person {
-    private ObservedGenericImmutable<String> email;
-    private ObservedBoolean sendEmail;
+    private ObservedGeneric<String> email;
+    private ObservedGeneric<Boolean> sendEmail;
 
     public Guardian(String firstName, String lastName, String email, boolean sendEmail) {
         super(firstName, lastName);
 
-        this.email = new ObservedGenericImmutable<String>(email);
-        this.sendEmail = new ObservedBoolean(sendEmail);
+        this.email = new ObservedGeneric<String>(email);
+        this.sendEmail = new ObservedGeneric<Boolean>(sendEmail);
     }
 
-    public ObservedGenericImmutable<String> getEmail() {
+    public ObservedGeneric<String> getEmail() {
         return this.email;
     }
-    public ObservedBoolean getSendEmailControl() {
+    public ObservedGeneric<Boolean> getSendEmailControl() {
         return this.sendEmail;
     }
 

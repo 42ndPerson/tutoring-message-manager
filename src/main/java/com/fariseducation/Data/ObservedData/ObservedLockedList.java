@@ -31,8 +31,13 @@ public class ObservedLockedList<ContentType> extends ObservedDatum implements It
     public int size() {
         return this.contents.size();
     }
+    @SuppressWarnings("unchecked")
+    public ContentType[] getStaticArray() {
+        return (ContentType[]) this.contents.toArray();
+    }
 
     @Override
+    @SuppressWarnings("rawtypes")
     public boolean equals(Object o) {
         if(o instanceof ObservedLockedList) return this.contents.equals(((ObservedLockedList)o).contents);
         return false;

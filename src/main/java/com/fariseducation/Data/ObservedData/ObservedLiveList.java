@@ -36,6 +36,7 @@ public class ObservedLiveList<ContentType> extends ObservedLockedList<ContentTyp
             if(memberTest.apply(content)) this.contents.add(content);
         }
     }
+    @SuppressWarnings("unchecked")
     public boolean isMember(Object o) {
         System.out.println("Member check");
         

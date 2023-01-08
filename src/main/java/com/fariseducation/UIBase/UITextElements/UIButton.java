@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import com.fariseducation.Data.ObservedData.ObservedGenericImmutable;
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
 
 public class UIButton extends UITextElement {
     private JButton button;
@@ -15,7 +15,7 @@ public class UIButton extends UITextElement {
     public UIButton(String text) {
         super(text);
     }
-    public UIButton(ObservedGenericImmutable<String> observedString) {
+    public UIButton(ObservedGeneric<String> observedString) {
         super(observedString);
     }
     public UIButton(String text, boolean flat) {
@@ -23,7 +23,7 @@ public class UIButton extends UITextElement {
 
         this.flat = flat;
     }
-    public UIButton(ObservedGenericImmutable<String> observedString, boolean flat) {
+    public UIButton(ObservedGeneric<String> observedString, boolean flat) {
         super(observedString);
 
         this.flat = flat;

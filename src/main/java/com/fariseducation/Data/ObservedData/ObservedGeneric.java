@@ -1,9 +1,9 @@
 package com.fariseducation.Data.ObservedData;
 
-public class ObservedGenericImmutable<ContentType> extends ObservedDatum {
+public class ObservedGeneric<ContentType> extends ObservedDatum {
     private ContentType val;
 
-    public ObservedGenericImmutable(ContentType val) {
+    public ObservedGeneric(ContentType val) {
         this.val = val;
     }
 
@@ -19,7 +19,7 @@ public class ObservedGenericImmutable<ContentType> extends ObservedDatum {
     @Override
     public boolean equals(Object o) {
         try {
-            return this.val==((ObservedGenericImmutable<ContentType>)o).val;
+            return this.val==((ObservedGeneric<ContentType>)o).val;
         } catch(ClassCastException e) {
             return false;
         }

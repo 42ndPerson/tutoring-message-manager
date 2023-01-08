@@ -85,7 +85,7 @@ public class StudentEditorWindow {
                                     new UIListBuilder<Session>(
                                         DataManager.getInstance().getSessionsForStudent(new ObservedGenericImmutable<Student>(this.student)), 
                                         (Session session) -> {
-                                            return new UILabel(session.getTutor().getVal().getName());
+                                            return new UILabel(session.getTutor()..getName());
                                         }, 
                                         UIAxis.VERTICAL, 
                                         UIAlignment.LEADING)
@@ -97,7 +97,7 @@ public class StudentEditorWindow {
                                         DataManager.getInstance().getSessionsForStudent(new ObservedGenericImmutable<Student>(this.student)), 
                                         (Session session) -> {
                                             return new UITextField(
-                                                session.getHoursDuration().getVal()+"", //Needs observable fix
+                                                session.getHoursDuration().+"", //Needs observable fix
                                                 false);
                                                 /*.onTyping(
                                                     (String val) -> {
@@ -115,7 +115,7 @@ public class StudentEditorWindow {
                                     new UIListBuilder<Session>(
                                         DataManager.getInstance().getSessionsForStudent(new ObservedGenericImmutable<Student>(this.student)), 
                                         (Session session) -> {
-                                            return new UILabel(session.getDate().getVal().toString());
+                                            return new UILabel(session.getDate()..toString());
                                         }, 
                                         UIAxis.VERTICAL, 
                                         UIAlignment.LEADING)

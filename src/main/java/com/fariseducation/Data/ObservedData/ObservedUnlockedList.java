@@ -23,6 +23,7 @@ public class ObservedUnlockedList<ContentType> extends ObservedLockedList<Conten
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
     public boolean equals(Object o) {
         if(o instanceof ObservedUnlockedList) return this.contents.equals(((ObservedUnlockedList)o).contents);
         return false;
