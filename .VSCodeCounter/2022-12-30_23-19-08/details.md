@@ -1,0 +1,133 @@
+# Details
+
+Date : 2022-12-30 23:19:08
+
+Directory /Users/twp/Library/CloudStorage/OneDrive-SaltLakeCitySchoolDistrict/12th Grade/CS HL2/IA/tutoring-message-manager
+
+Total : 118 files,  3725 codes, 239 comments, 437 blanks, all 4401 lines
+
+[Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
+
+## Files
+| filename | language | code | comment | blank | total |
+| :--- | :--- | ---: | ---: | ---: | ---: |
+| [pom.xml](/pom.xml) | XML | 172 | 1 | 1 | 174 |
+| [src/main/java/com/fariseducation/App.java](/src/main/java/com/fariseducation/App.java) | Java | 42 | 171 | 7 | 220 |
+| [src/main/java/com/fariseducation/Data/Guardian.java](/src/main/java/com/fariseducation/Data/Guardian.java) | Java | 22 | 0 | 7 | 29 |
+| [src/main/java/com/fariseducation/Data/GuardianshipRelationship.java](/src/main/java/com/fariseducation/Data/GuardianshipRelationship.java) | Java | 19 | 0 | 5 | 24 |
+| [src/main/java/com/fariseducation/Data/Identifiable.java](/src/main/java/com/fariseducation/Data/Identifiable.java) | Java | 5 | 0 | 3 | 8 |
+| [src/main/java/com/fariseducation/Data/Indexing/BinaryIndexTreeNode.java](/src/main/java/com/fariseducation/Data/Indexing/BinaryIndexTreeNode.java) | Java | 64 | 0 | 10 | 74 |
+| [src/main/java/com/fariseducation/Data/Indexing/IndexTreeNode.java](/src/main/java/com/fariseducation/Data/Indexing/IndexTreeNode.java) | Java | 48 | 0 | 9 | 57 |
+| [src/main/java/com/fariseducation/Data/Indexing/TreeNode.java](/src/main/java/com/fariseducation/Data/Indexing/TreeNode.java) | Java | 12 | 0 | 3 | 15 |
+| [src/main/java/com/fariseducation/Data/ManagedData.java](/src/main/java/com/fariseducation/Data/ManagedData.java) | Java | 28 | 0 | 6 | 34 |
+| [src/main/java/com/fariseducation/Data/ManagedDataSource.java](/src/main/java/com/fariseducation/Data/ManagedDataSource.java) | Java | 2 | 0 | 2 | 4 |
+| [src/main/java/com/fariseducation/Data/ObservedData/DataManager.java](/src/main/java/com/fariseducation/Data/ObservedData/DataManager.java) | Java | 183 | 2 | 18 | 203 |
+| [src/main/java/com/fariseducation/Data/ObservedData/DataObserver.java](/src/main/java/com/fariseducation/Data/ObservedData/DataObserver.java) | Java | 4 | 0 | 2 | 6 |
+| [src/main/java/com/fariseducation/Data/ObservedData/ObservedBoolean.java](/src/main/java/com/fariseducation/Data/ObservedData/ObservedBoolean.java) | Java | 19 | 0 | 5 | 24 |
+| [src/main/java/com/fariseducation/Data/ObservedData/ObservedDate.java](/src/main/java/com/fariseducation/Data/ObservedData/ObservedDate.java) | Java | 20 | 0 | 6 | 26 |
+| [src/main/java/com/fariseducation/Data/ObservedData/ObservedDatum.java](/src/main/java/com/fariseducation/Data/ObservedData/ObservedDatum.java) | Java | 18 | 0 | 4 | 22 |
+| [src/main/java/com/fariseducation/Data/ObservedData/ObservedDouble.java](/src/main/java/com/fariseducation/Data/ObservedData/ObservedDouble.java) | Java | 19 | 0 | 5 | 24 |
+| [src/main/java/com/fariseducation/Data/ObservedData/ObservedGeneric.java](/src/main/java/com/fariseducation/Data/ObservedData/ObservedGeneric.java) | Java | 23 | 0 | 5 | 28 |
+| [src/main/java/com/fariseducation/Data/ObservedData/ObservedLiveList.java](/src/main/java/com/fariseducation/Data/ObservedData/ObservedLiveList.java) | Java | 52 | 0 | 11 | 63 |
+| [src/main/java/com/fariseducation/Data/ObservedData/ObservedLockedList.java](/src/main/java/com/fariseducation/Data/ObservedData/ObservedLockedList.java) | Java | 35 | 0 | 6 | 41 |
+| [src/main/java/com/fariseducation/Data/ObservedData/ObservedString.java](/src/main/java/com/fariseducation/Data/ObservedData/ObservedString.java) | Java | 41 | 1 | 10 | 52 |
+| [src/main/java/com/fariseducation/Data/ObservedData/ObservedUUID.java](/src/main/java/com/fariseducation/Data/ObservedData/ObservedUUID.java) | Java | 24 | 0 | 7 | 31 |
+| [src/main/java/com/fariseducation/Data/ObservedData/ObservedUnlockedList.java](/src/main/java/com/fariseducation/Data/ObservedData/ObservedUnlockedList.java) | Java | 28 | 0 | 3 | 31 |
+| [src/main/java/com/fariseducation/Data/Person.java](/src/main/java/com/fariseducation/Data/Person.java) | Java | 26 | 0 | 7 | 33 |
+| [src/main/java/com/fariseducation/Data/Savable.java](/src/main/java/com/fariseducation/Data/Savable.java) | Java | 4 | 0 | 2 | 6 |
+| [src/main/java/com/fariseducation/Data/Session.java](/src/main/java/com/fariseducation/Data/Session.java) | Java | 33 | 0 | 7 | 40 |
+| [src/main/java/com/fariseducation/Data/SpreadsheetReader.java](/src/main/java/com/fariseducation/Data/SpreadsheetReader.java) | Java | 35 | 0 | 15 | 50 |
+| [src/main/java/com/fariseducation/Data/Student.java](/src/main/java/com/fariseducation/Data/Student.java) | Java | 11 | 0 | 4 | 15 |
+| [src/main/java/com/fariseducation/Data/TimeGroup.java](/src/main/java/com/fariseducation/Data/TimeGroup.java) | Java | 39 | 3 | 9 | 51 |
+| [src/main/java/com/fariseducation/Data/Tutor.java](/src/main/java/com/fariseducation/Data/Tutor.java) | Java | 10 | 0 | 4 | 14 |
+| [src/main/java/com/fariseducation/Data/TutoringRelationship.java](/src/main/java/com/fariseducation/Data/TutoringRelationship.java) | Java | 0 | 9 | 1 | 10 |
+| [src/main/java/com/fariseducation/DataLoadingWindow.java](/src/main/java/com/fariseducation/DataLoadingWindow.java) | Java | 25 | 0 | 8 | 33 |
+| [src/main/java/com/fariseducation/ParentEditorWindow.java](/src/main/java/com/fariseducation/ParentEditorWindow.java) | Java | 3 | 0 | 3 | 6 |
+| [src/main/java/com/fariseducation/PrimaryWindow.java](/src/main/java/com/fariseducation/PrimaryWindow.java) | Java | 195 | 9 | 8 | 212 |
+| [src/main/java/com/fariseducation/StudentEditorWindow.java](/src/main/java/com/fariseducation/StudentEditorWindow.java) | Java | 147 | 8 | 7 | 162 |
+| [src/main/java/com/fariseducation/TimeGroupEditorWindow.java](/src/main/java/com/fariseducation/TimeGroupEditorWindow.java) | Java | 116 | 0 | 8 | 124 |
+| [src/main/java/com/fariseducation/TutorEditorWindow.java](/src/main/java/com/fariseducation/TutorEditorWindow.java) | Java | 3 | 0 | 3 | 6 |
+| [src/main/java/com/fariseducation/UIBase/UIAlert.java](/src/main/java/com/fariseducation/UIBase/UIAlert.java) | Java | 7 | 0 | 3 | 10 |
+| [src/main/java/com/fariseducation/UIBase/UIComponent.java](/src/main/java/com/fariseducation/UIBase/UIComponent.java) | Java | 89 | 0 | 6 | 95 |
+| [src/main/java/com/fariseducation/UIBase/UIDropdown.java](/src/main/java/com/fariseducation/UIBase/UIDropdown.java) | Java | 55 | 0 | 16 | 71 |
+| [src/main/java/com/fariseducation/UIBase/UIEnums/UIAlignment.java](/src/main/java/com/fariseducation/UIBase/UIEnums/UIAlignment.java) | Java | 14 | 0 | 5 | 19 |
+| [src/main/java/com/fariseducation/UIBase/UIEnums/UIAxis.java](/src/main/java/com/fariseducation/UIBase/UIEnums/UIAxis.java) | Java | 12 | 0 | 5 | 17 |
+| [src/main/java/com/fariseducation/UIBase/UIFrameConstraints.java](/src/main/java/com/fariseducation/UIBase/UIFrameConstraints.java) | Java | 64 | 0 | 4 | 68 |
+| [src/main/java/com/fariseducation/UIBase/UIGroup.java](/src/main/java/com/fariseducation/UIBase/UIGroup.java) | Java | 59 | 8 | 17 | 84 |
+| [src/main/java/com/fariseducation/UIBase/UIIndicator.java](/src/main/java/com/fariseducation/UIBase/UIIndicator.java) | Java | 65 | 0 | 18 | 83 |
+| [src/main/java/com/fariseducation/UIBase/UIListBuilder.java](/src/main/java/com/fariseducation/UIBase/UIListBuilder.java) | Java | 50 | 0 | 15 | 65 |
+| [src/main/java/com/fariseducation/UIBase/UIScrollContainer.java](/src/main/java/com/fariseducation/UIBase/UIScrollContainer.java) | Java | 19 | 0 | 6 | 25 |
+| [src/main/java/com/fariseducation/UIBase/UISeparator.java](/src/main/java/com/fariseducation/UIBase/UISeparator.java) | Java | 20 | 0 | 9 | 29 |
+| [src/main/java/com/fariseducation/UIBase/UISpacer.java](/src/main/java/com/fariseducation/UIBase/UISpacer.java) | Java | 32 | 0 | 11 | 43 |
+| [src/main/java/com/fariseducation/UIBase/UITextElements/UIButton.java](/src/main/java/com/fariseducation/UIBase/UITextElements/UIButton.java) | Java | 51 | 1 | 14 | 66 |
+| [src/main/java/com/fariseducation/UIBase/UITextElements/UILabel.java](/src/main/java/com/fariseducation/UIBase/UITextElements/UILabel.java) | Java | 26 | 0 | 8 | 34 |
+| [src/main/java/com/fariseducation/UIBase/UITextElements/UITextElement.java](/src/main/java/com/fariseducation/UIBase/UITextElements/UITextElement.java) | Java | 39 | 0 | 10 | 49 |
+| [src/main/java/com/fariseducation/UIBase/UITextElements/UITextField.java](/src/main/java/com/fariseducation/UIBase/UITextElements/UITextField.java) | Java | 117 | 0 | 20 | 137 |
+| [src/main/java/com/fariseducation/UIBase/UITextElements/UITextFormat.java](/src/main/java/com/fariseducation/UIBase/UITextElements/UITextFormat.java) | Java | 42 | 0 | 8 | 50 |
+| [src/main/java/com/fariseducation/UIBase/UIToggle.java](/src/main/java/com/fariseducation/UIBase/UIToggle.java) | Java | 30 | 0 | 9 | 39 |
+| [src/main/java/com/fariseducation/UIBase/UIWindow.java](/src/main/java/com/fariseducation/UIBase/UIWindow.java) | Java | 37 | 1 | 11 | 49 |
+| [src/test/java/com/fariseducation/AppTest.java](/src/test/java/com/fariseducation/AppTest.java) | Java | 9 | 6 | 4 | 19 |
+| [target/classes/com/fariseducation/App.class](/target/classes/com/fariseducation/App.class) | Java | 9 | 0 | 0 | 9 |
+| [target/classes/com/fariseducation/Data/Guardian.class](/target/classes/com/fariseducation/Data/Guardian.class) | Java | 11 | 0 | 0 | 11 |
+| [target/classes/com/fariseducation/Data/GuardianshipRelationship.class](/target/classes/com/fariseducation/Data/GuardianshipRelationship.class) | Java | 10 | 0 | 0 | 10 |
+| [target/classes/com/fariseducation/Data/Identifiable.class](/target/classes/com/fariseducation/Data/Identifiable.class) | Java | 2 | 0 | 0 | 2 |
+| [target/classes/com/fariseducation/Data/Indexing/BinaryIndexTreeNode.class](/target/classes/com/fariseducation/Data/Indexing/BinaryIndexTreeNode.class) | Java | 25 | 0 | 0 | 25 |
+| [target/classes/com/fariseducation/Data/Indexing/IndexTreeNode.class](/target/classes/com/fariseducation/Data/Indexing/IndexTreeNode.class) | Java | 29 | 0 | 0 | 29 |
+| [target/classes/com/fariseducation/Data/Indexing/TreeNode.class](/target/classes/com/fariseducation/Data/Indexing/TreeNode.class) | Java | 7 | 0 | 0 | 7 |
+| [target/classes/com/fariseducation/Data/ManagedData.class](/target/classes/com/fariseducation/Data/ManagedData.class) | Java | 25 | 0 | 0 | 25 |
+| [target/classes/com/fariseducation/Data/ManagedDataSource.class](/target/classes/com/fariseducation/Data/ManagedDataSource.class) | Java | 5 | 0 | 0 | 5 |
+| [target/classes/com/fariseducation/Data/ObservedData/DataManager.class](/target/classes/com/fariseducation/Data/ObservedData/DataManager.class) | Java | 62 | 19 | 0 | 81 |
+| [target/classes/com/fariseducation/Data/ObservedData/DataObserver.class](/target/classes/com/fariseducation/Data/ObservedData/DataObserver.class) | Java | 2 | 0 | 0 | 2 |
+| [target/classes/com/fariseducation/Data/ObservedData/ObservedBoolean.class](/target/classes/com/fariseducation/Data/ObservedData/ObservedBoolean.class) | Java | 20 | 0 | 0 | 20 |
+| [target/classes/com/fariseducation/Data/ObservedData/ObservedDate.class](/target/classes/com/fariseducation/Data/ObservedData/ObservedDate.class) | Java | 21 | 0 | 0 | 21 |
+| [target/classes/com/fariseducation/Data/ObservedData/ObservedDatum.class](/target/classes/com/fariseducation/Data/ObservedData/ObservedDatum.class) | Java | 23 | 0 | 0 | 23 |
+| [target/classes/com/fariseducation/Data/ObservedData/ObservedDouble.class](/target/classes/com/fariseducation/Data/ObservedData/ObservedDouble.class) | Java | 18 | 0 | 0 | 18 |
+| [target/classes/com/fariseducation/Data/ObservedData/ObservedGeneric.class](/target/classes/com/fariseducation/Data/ObservedData/ObservedGeneric.class) | Java | 19 | 0 | 0 | 19 |
+| [target/classes/com/fariseducation/Data/ObservedData/ObservedLiveList.class](/target/classes/com/fariseducation/Data/ObservedData/ObservedLiveList.class) | Java | 29 | 0 | 0 | 29 |
+| [target/classes/com/fariseducation/Data/ObservedData/ObservedLockedList.class](/target/classes/com/fariseducation/Data/ObservedData/ObservedLockedList.class) | Java | 32 | 0 | 0 | 32 |
+| [target/classes/com/fariseducation/Data/ObservedData/ObservedString.class](/target/classes/com/fariseducation/Data/ObservedData/ObservedString.class) | Java | 33 | 0 | 0 | 33 |
+| [target/classes/com/fariseducation/Data/ObservedData/ObservedUUID.class](/target/classes/com/fariseducation/Data/ObservedData/ObservedUUID.class) | Java | 24 | 0 | 0 | 24 |
+| [target/classes/com/fariseducation/Data/ObservedData/ObservedUnlockedList.class](/target/classes/com/fariseducation/Data/ObservedData/ObservedUnlockedList.class) | Java | 33 | 0 | 0 | 33 |
+| [target/classes/com/fariseducation/Data/Person.class](/target/classes/com/fariseducation/Data/Person.class) | Java | 17 | 0 | 0 | 17 |
+| [target/classes/com/fariseducation/Data/Savable.class](/target/classes/com/fariseducation/Data/Savable.class) | Java | 2 | 0 | 0 | 2 |
+| [target/classes/com/fariseducation/Data/Session.class](/target/classes/com/fariseducation/Data/Session.class) | Java | 13 | 0 | 0 | 13 |
+| [target/classes/com/fariseducation/Data/SpreadsheetReader.class](/target/classes/com/fariseducation/Data/SpreadsheetReader.class) | Java | 13 | 0 | 1 | 14 |
+| [target/classes/com/fariseducation/Data/Student.class](/target/classes/com/fariseducation/Data/Student.class) | Java | 12 | 0 | 0 | 12 |
+| [target/classes/com/fariseducation/Data/TimeGroup.class](/target/classes/com/fariseducation/Data/TimeGroup.class) | Java | 26 | 0 | 0 | 26 |
+| [target/classes/com/fariseducation/Data/Tutor.class](/target/classes/com/fariseducation/Data/Tutor.class) | Java | 11 | 0 | 0 | 11 |
+| [target/classes/com/fariseducation/DataLoadingWindow.class](/target/classes/com/fariseducation/DataLoadingWindow.class) | Java | 12 | 0 | 2 | 14 |
+| [target/classes/com/fariseducation/ParentEditorWindow.class](/target/classes/com/fariseducation/ParentEditorWindow.class) | Java | 5 | 0 | 0 | 5 |
+| [target/classes/com/fariseducation/PrimaryWindow.class](/target/classes/com/fariseducation/PrimaryWindow.class) | Java | 85 | 0 | 0 | 85 |
+| [target/classes/com/fariseducation/StudentEditorWindow.class](/target/classes/com/fariseducation/StudentEditorWindow.class) | Java | 89 | 0 | 1 | 90 |
+| [target/classes/com/fariseducation/TimeGroupEditorWindow.class](/target/classes/com/fariseducation/TimeGroupEditorWindow.class) | Java | 51 | 0 | 0 | 51 |
+| [target/classes/com/fariseducation/TutorEditorWindow.class](/target/classes/com/fariseducation/TutorEditorWindow.class) | Java | 5 | 0 | 0 | 5 |
+| [target/classes/com/fariseducation/UIBase/UIAlert.class](/target/classes/com/fariseducation/UIBase/UIAlert.class) | Java | 8 | 0 | 0 | 8 |
+| [target/classes/com/fariseducation/UIBase/UIComponent.class](/target/classes/com/fariseducation/UIBase/UIComponent.class) | Java | 30 | 0 | 0 | 30 |
+| [target/classes/com/fariseducation/UIBase/UIDropdown$1.class](/target/classes/com/fariseducation/UIBase/UIDropdown$1.class) | Java | 9 | 0 | 1 | 10 |
+| [target/classes/com/fariseducation/UIBase/UIDropdown.class](/target/classes/com/fariseducation/UIBase/UIDropdown.class) | Java | 26 | 0 | 0 | 26 |
+| [target/classes/com/fariseducation/UIBase/UIEnums/UIAlignment.class](/target/classes/com/fariseducation/UIBase/UIEnums/UIAlignment.class) | Java | 13 | 0 | 0 | 13 |
+| [target/classes/com/fariseducation/UIBase/UIEnums/UIAxis.class](/target/classes/com/fariseducation/UIBase/UIEnums/UIAxis.class) | Java | 13 | 0 | 0 | 13 |
+| [target/classes/com/fariseducation/UIBase/UIFrameConstraints.class](/target/classes/com/fariseducation/UIBase/UIFrameConstraints.class) | Java | 20 | 0 | 0 | 20 |
+| [target/classes/com/fariseducation/UIBase/UIGroup.class](/target/classes/com/fariseducation/UIBase/UIGroup.class) | Java | 37 | 0 | 0 | 37 |
+| [target/classes/com/fariseducation/UIBase/UIIndicator.class](/target/classes/com/fariseducation/UIBase/UIIndicator.class) | Java | 35 | 0 | 1 | 36 |
+| [target/classes/com/fariseducation/UIBase/UIListBuilder.class](/target/classes/com/fariseducation/UIBase/UIListBuilder.class) | Java | 26 | 0 | 1 | 27 |
+| [target/classes/com/fariseducation/UIBase/UIScrollContainer.class](/target/classes/com/fariseducation/UIBase/UIScrollContainer.class) | Java | 18 | 0 | 0 | 18 |
+| [target/classes/com/fariseducation/UIBase/UISeparator.class](/target/classes/com/fariseducation/UIBase/UISeparator.class) | Java | 12 | 0 | 0 | 12 |
+| [target/classes/com/fariseducation/UIBase/UISpacer.class](/target/classes/com/fariseducation/UIBase/UISpacer.class) | Java | 28 | 0 | 1 | 29 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UIButton$1.class](/target/classes/com/fariseducation/UIBase/UITextElements/UIButton$1.class) | Java | 12 | 0 | 1 | 13 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UIButton.class](/target/classes/com/fariseducation/UIBase/UITextElements/UIButton.class) | Java | 34 | 0 | 0 | 34 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UILabel.class](/target/classes/com/fariseducation/UIBase/UITextElements/UILabel.class) | Java | 27 | 0 | 0 | 27 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UITextElement.class](/target/classes/com/fariseducation/UIBase/UITextElements/UITextElement.class) | Java | 25 | 0 | 1 | 26 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UITextField$1.class](/target/classes/com/fariseducation/UIBase/UITextElements/UITextField$1.class) | Java | 11 | 0 | 0 | 11 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UITextField$2.class](/target/classes/com/fariseducation/UIBase/UITextElements/UITextField$2.class) | Java | 12 | 0 | 1 | 13 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UITextField$3.class](/target/classes/com/fariseducation/UIBase/UITextElements/UITextField$3.class) | Java | 11 | 0 | 1 | 12 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UITextField$4.class](/target/classes/com/fariseducation/UIBase/UITextElements/UITextField$4.class) | Java | 16 | 0 | 1 | 17 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UITextField$5.class](/target/classes/com/fariseducation/UIBase/UITextElements/UITextField$5.class) | Java | 16 | 0 | 1 | 17 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UITextField.class](/target/classes/com/fariseducation/UIBase/UITextElements/UITextField.class) | Java | 36 | 0 | 1 | 37 |
+| [target/classes/com/fariseducation/UIBase/UITextElements/UITextFormat.class](/target/classes/com/fariseducation/UIBase/UITextElements/UITextFormat.class) | Java | 28 | 0 | 0 | 28 |
+| [target/classes/com/fariseducation/UIBase/UIToggle$1.class](/target/classes/com/fariseducation/UIBase/UIToggle$1.class) | Java | 16 | 0 | 0 | 16 |
+| [target/classes/com/fariseducation/UIBase/UIToggle.class](/target/classes/com/fariseducation/UIBase/UIToggle.class) | Java | 20 | 0 | 1 | 21 |
+| [target/classes/com/fariseducation/UIBase/UIWindow.class](/target/classes/com/fariseducation/UIBase/UIWindow.class) | Java | 32 | 0 | 1 | 33 |
+| [target/test-classes/com/fariseducation/AppTest.class](/target/test-classes/com/fariseducation/AppTest.class) | Java | 10 | 0 | 0 | 10 |
+
+[Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
