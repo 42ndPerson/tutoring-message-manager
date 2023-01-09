@@ -7,8 +7,11 @@ import javax.swing.JScrollPane;
 
 public class UIScrollContainer extends UIComponent {
     private JScrollPane scrollPane;
+    private UIComponent contents;
 
     public UIScrollContainer(UIComponent contents) {
+        this.contents = contents;
+
         contents.getAWTComponent().setPreferredSize(
             new Dimension(
                 contents.getAWTComponent().getPreferredSize().width+30,

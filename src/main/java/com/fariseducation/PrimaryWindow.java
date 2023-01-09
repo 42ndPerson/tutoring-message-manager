@@ -44,10 +44,22 @@ public class PrimaryWindow {
                     new UIButton("Create Template")
                         .format()
                         .setMaxSize(50, null),
-                    new UIButton("View Parent")
+                    new UIButton("View Students")
+                        .onPress(() -> {
+                            new StudentListWindow();
+                        })
+                        .format()
+                        .setMaxSize(50, null),
+                    new UIButton("View Guardians")
+                        .onPress(() -> {
+                            new GuardianListWindow();
+                        })
                         .format()
                         .setMaxSize(50, null),
                     new UIButton("View Tutors")
+                        .onPress(() -> {
+                            new TutorListWindow();
+                        })
                         .format()
                         .setMaxSize(50, null),
                     new UISpacer(),
@@ -78,12 +90,12 @@ public class PrimaryWindow {
                         new UIScrollContainer(
                             new UIListBuilder<TimeGroup>(
                                 DataManager.getInstance().getTimeGroups(), 
-                                (val) -> {
+                                (TimeGroup val) -> {
                                     return new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
                                         new UIButton(val.getName(), true),
-                                        new UIIndicator<ObservedUUID>(
-                                            new ObservedUUID(val.getUUID()), 
-                                            new ObservedUUID(this.selectedTimeGroup..getUUID()), 
+                                        new UIIndicator<ObservedGeneric<TimeGroup>>(
+                                            new ObservedGeneric<TimeGroup>(val),
+                                            this.selectedTimeGroup, 
                                             50, 
                                             50)
                                     });
@@ -111,12 +123,12 @@ public class PrimaryWindow {
                         new UIScrollContainer(
                             new UIListBuilder<Student>(
                                 DataManager.getInstance().getStudentsForTimeGroup(this.selectedTimeGroup), 
-                                (val) -> {
+                                (Student val) -> {
                                     return new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
                                         new UIButton(val.getName(), true),
-                                        new UIIndicator<ObservedUUID>(
-                                            new ObservedUUID(val.getUUID()), 
-                                            new ObservedUUID(this.selectedTimeGroup..getUUID()), 
+                                        new UIIndicator<ObservedGeneric<Student>>(
+                                            new ObservedGeneric<Student>(val),
+                                            this.selectedStudent, 
                                             50, 
                                             50)
                                     });

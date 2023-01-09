@@ -72,21 +72,23 @@ public class DataManager {
         }
 
         for(WeakReference<ObservedLiveList> listRef : this.liveLists) {
-            if(listRef.get() != null && listRef.get().isMember(datum)) listRef.get().addMember(listRef.get());;
+            System.out.println("Testing");
+            if(listRef.get() != null) System.out.println(listRef.get().isMember(datum));
+            if(listRef.get() != null && listRef.get().isMember(datum)) listRef.get().addMember(datum);;
         }
     }
     public void deleteDatum(ManagedDataSource datum) {
         this.dataLookup.remove(datum.getUUID());
 
-        guardians.remove((Guardian)datum);
-        students.remove((Student)datum);
-        tutors.remove((Tutor)datum);
-        sessions.remove((Session)datum);
-        guardianshipRelationships.remove((GuardianshipRelationship)datum);
-        timeGroups.remove((TimeGroup)datum);
+        if(datum instanceof Guardian) guardians.remove((Guardian)datum);
+        if(datum instanceof Student) students.remove((Student)datum);
+        if(datum instanceof Tutor) tutors.remove((Tutor)datum);
+        if(datum instanceof Session) sessions.remove((Session)datum);
+        if(datum instanceof GuardianshipRelationship) guardianshipRelationships.remove((GuardianshipRelationship)datum);
+        if(datum instanceof TimeGroup) timeGroups.remove((TimeGroup)datum);
 
         for(WeakReference<ObservedLiveList> listRef : this.liveLists) {
-            if(listRef.get() != null && listRef.get().isMember(datum)) listRef.get().removeMember(listRef.get());;
+            if(listRef.get() != null && listRef.get().isMember(datum)) listRef.get().removeMember(datum);;
         }
     }
     public boolean datumIsRegistered(ManagedDataSource datum) {
@@ -200,6 +202,33 @@ public class DataManager {
                     if(student==session.getStudent().getVal() && timeGroup.getVal().containsSession(session)) return true;
                 }
                 return false;
+            });
+    }
+
+    public ObservedLiveList<Student> getStudentsForGuardian(ObservedGeneric<Guardian> guardian) {
+        return new ObservedLiveList<Student>(
+            new ObservedDatum[]{guardian},
+            DataManager.getInstance()::getStudents, 
+            (Student student) -> {
+                for(GuardianshipRelationship gr : DataManager.getInstance().getGuardianshipRelationships()) {
+                    if(gr.getStudent().getVal()==student && gr.getGuardian()==guardian) return true;
+                }
+                return false;
+            });
+    }
+    public ObservedLiveList<GuardianshipRelationship> getGuardianshipRealtionshipsForGuardian(ObservedGeneric<Guardian> guardian) {
+        System.out.println("GGRFG Fetched");
+        return new ObservedLiveList<GuardianshipRelationship>(
+            new ObservedDatum[]{guardian},
+            DataManager.getInstance()::getGuardianshipRelationships, 
+            (GuardianshipRelationship gr) -> {
+                System.out.println("GGRFG:");
+                System.out.println(guardian);
+                System.out.println(guardian.getVal().getName().getVal());
+                System.out.println(gr);
+                System.out.println(gr.getGuardian());
+                System.out.println(gr.getGuardian().getVal().getName().getVal());
+                return guardian.getVal()==gr.getGuardian().getVal();
             });
     }
 }

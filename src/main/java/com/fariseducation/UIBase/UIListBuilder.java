@@ -19,10 +19,24 @@ public class UIListBuilder<InputType> extends UIComponent implements DataObserve
     public UIListBuilder(
         ArrayList<InputType> inputElements, 
         Function<InputType,UIComponent> builder,
+        UIAxis axis) {
+
+        this(new ObservedLockedList<InputType>(inputElements), builder, axis, UIAlignment.NONE);
+    }
+    public UIListBuilder(
+        ArrayList<InputType> inputElements, 
+        Function<InputType,UIComponent> builder,
         UIAxis axis,
         UIAlignment alignment) {
 
         this(new ObservedLockedList<InputType>(inputElements), builder, axis, alignment);
+    }
+    public UIListBuilder(
+        ObservedLockedList<InputType> inputElements, 
+        Function<InputType,UIComponent> builder,
+        UIAxis axis) {
+
+        this(inputElements, builder, axis, UIAlignment.NONE);
     }
     public UIListBuilder(
         ObservedLockedList<InputType> inputElements, 
@@ -36,6 +50,9 @@ public class UIListBuilder<InputType> extends UIComponent implements DataObserve
         this.axis = axis;
         this.alignment = alignment;
 
+        System.out.print("Construction Grs:");
+        inputElements.print();
+
         this.content = new UIGroup(this.axis, this.alignment, new UIComponent[]{});
 
         build();
@@ -44,11 +61,20 @@ public class UIListBuilder<InputType> extends UIComponent implements DataObserve
     private void build() {
         UIComponent[] assembledComponents = new UIComponent[this.inputElements.size()];
 
+        System.out.println("Build Grs:");
+        inputElements.print();
+        System.out.println("---");
+
         for(int i = 0; i < this.inputElements.size(); i++) {
+            System.out.println(this.inputElements);
+            System.out.println(this.inputElements.get(i));
+            System.out.println(this.inputElements.getClass());
+            System.out.println(this.inputElements.get(i).getClass());
             assembledComponents[i] = builder.apply(this.inputElements.get(i));
         }
 
         this.content.rebuild(assembledComponents);
+        System.out.println("ListBuilder Update");
     }
 
     @Override
@@ -60,5 +86,4 @@ public class UIListBuilder<InputType> extends UIComponent implements DataObserve
     public void updateAfterDataChange() {
         build();
     }
-    
 }

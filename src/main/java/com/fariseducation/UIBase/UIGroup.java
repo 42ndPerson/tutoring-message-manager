@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
+import com.fariseducation.UIBase.UITextElements.UILabel;
 
 public class UIGroup extends UIComponent {
     private JPanel pane;
@@ -15,6 +16,9 @@ public class UIGroup extends UIComponent {
     private UIAxis axis;
     private UIAlignment alignment;
 
+    public UIGroup(UIAxis axis, UIComponent[] components) {
+        this.build(axis, UIAlignment.NONE, components);
+    }
     public UIGroup(UIAxis axis, UIAlignment alignment, UIComponent[] components) {
         this.build(axis, alignment, components);
     }
@@ -32,8 +36,14 @@ public class UIGroup extends UIComponent {
     
     public void rebuild(UIComponent[] newComponents) {
         this.pane.removeAll();
+        this.children.add(
+            new UILabel("test")
+        );
         assembleChildren(newComponents);
         this.pane.revalidate();
+
+        System.out.println(this.children.size());
+        System.out.println("UIGroup Update");
     }
 
     /**

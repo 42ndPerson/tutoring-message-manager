@@ -1,7 +1,7 @@
 package com.fariseducation.Data.ObservedData;
 
 public class ObservedGeneric<ContentType> extends ObservedDatum {
-    private ContentType val;
+    protected ContentType val;
 
     public ObservedGeneric(ContentType val) {
         this.val = val;

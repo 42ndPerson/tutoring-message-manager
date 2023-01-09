@@ -25,10 +25,12 @@ import com.fariseducation.UIBase.UITextElements.UILabel;
 import com.fariseducation.UIBase.UITextElements.UITextField;
 import com.fariseducation.UIBase.UITextElements.UITextFormat;
 import com.fariseducation.Data.Guardian;
+import com.fariseducation.Data.GuardianshipRelationship;
+import com.fariseducation.Data.Student;
 import com.fariseducation.Data.ObservedData.DataManager;
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
 import com.fariseducation.Data.ObservedData.ObservedLiveList;
 import com.fariseducation.Data.ObservedData.ObservedLockedList;
-import com.fariseducation.Data.ObservedData.ObservedString;
 import com.fariseducation.UIBase.UIComponent;
 import com.fariseducation.UIBase.UIGroup;
 import com.fariseducation.UIBase.UIIndicator;
@@ -41,6 +43,10 @@ import com.fariseducation.UIBase.UISpacer;
  * Hello world!
  */
 public final class App {
+    private static Student st = new Student("null", "null");
+    private static Guardian g = new Guardian("null", "null"," ",true);
+    private static GuardianshipRelationship gr = new GuardianshipRelationship(g, st);
+
     private App() {
     }
 
@@ -49,20 +55,36 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        //LocalDate ld = LocalDate.of(0, 1, 1);
-        //System.out.println(ld.toString());
-        /*GregorianCalendar gc = new GregorianCalendar();
-        gc.set(0, 13, 0, 0, 0);
-        System.out.println(gc.getTime().toString());
-        System.out.println(gc.getTime().);*/
-        /*ObservedLiveList test = new ObservedLiveList<Guardian>(
-            DataManager.getInstance()::getGuardians,
-            (Guardian val) -> {
-                return true;
-            }
-        );
-        ObservedLockedList test2 = (ObservedLockedList)test;
-        System.out.println(test==test2);*/
+        /*new UIWindow("Test", new UIComponent[]{
+            new UIButton("Add Student")
+                .onPress(() -> {
+                    DataManager.getInstance().registerDatum(st);
+                }),
+            new UIButton("Add Guardian")
+                .onPress(() -> {
+                    DataManager.getInstance().registerDatum(g);
+                }),
+            new UIButton("Add Relationship")
+                .onPress(() -> {
+                    DataManager.getInstance().registerDatum(gr);
+                    System.out.println("GuardianRs: ");
+                    DataManager.getInstance().getGuardianshipRealtionshipsForGuardian(new ObservedGeneric<Guardian>(g)).print();
+                }), 
+            new UIListBuilder<GuardianshipRelationship>(
+                DataManager.getInstance().getGuardianshipRealtionshipsForGuardian(new ObservedGeneric<Guardian>(g)), 
+                (GuardianshipRelationship gr) -> {
+                    return new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                        new UILabel(gr.getGuardian().getVal().getName()),
+                        new UISpacer(),
+                        new UIButton("X")
+                            .onPress(() -> {
+                                DataManager.getInstance().deleteDatum(gr);
+                            })
+                    });
+                }, 
+                UIAxis.VERTICAL, 
+                UIAlignment.LEADING)
+        });*/
 
         new PrimaryWindow();
         /*ObservedString oString = new ObservedString("A");

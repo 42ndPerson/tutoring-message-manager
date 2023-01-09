@@ -6,6 +6,7 @@ import java.util.function.Function;
 
 import com.fariseducation.Data.ManagedData;
 
+@SuppressWarnings("rawtypes")
 public class IndexTreeNode extends ManagedData implements TreeNode<IndexTreeNode> {
     private Comparable key;
     private Object element;
@@ -52,5 +53,19 @@ public class IndexTreeNode extends ManagedData implements TreeNode<IndexTreeNode
     @Override
     public void save() {
         super.save("/MessageManagerData/IndexTrees/");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof IndexTreeNode) {
+            IndexTreeNode node = (IndexTreeNode)o;
+
+            return 
+                this.key==node.key && 
+                this.element==node.key && 
+                this.parent==node.parent && 
+                this.children.equals(node.children);
+        }
+        return false;
     }
 }

@@ -1,35 +1,38 @@
 package com.fariseducation.Data;
 
-public abstract class Person extends ManagedDataSource {
-    private String firstName;
-    private String lastName;
-    private String fullName;
+import com.fariseducation.Data.ObservedData.DataObserver;
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
+
+public abstract class Person extends ManagedDataSource implements DataObserver {
+    private ObservedGeneric<String> firstName;
+    private ObservedGeneric<String> lastName;
+    private ObservedGeneric<String> fullName;
 
     public Person(String fn, String ln) {
         super();
 
-        this.firstName = fn;
-        this.lastName = ln;
-        this.fullName = fn + " " + ln;
+        this.firstName = new ObservedGeneric<String>(fn);
+        this.lastName = new ObservedGeneric<String>(ln);
+        this.fullName = new ObservedGeneric<String>(fn + " " + ln);
+
+        this.firstName.addObserver(this);
+        this.lastName.addObserver(this);
     }
 
-    public String getName() {
+    public ObservedGeneric<String> getName() {
         return fullName;
     }
 
-    public String getFirstName() {
+    public ObservedGeneric<String> getFirstName() {
         return this.firstName;
     }
-    public void setFirstName(String fn) {
-        this.firstName = fn;
-        update();
-    }
-    public String getLastName() {
+    public ObservedGeneric<String> getLastName() {
         return this.lastName;
     }
-    public void setLastName(String ln) {
-        this.firstName = ln;
-        update();
+
+    @Override 
+    public void updateAfterDataChange() {
+        this.fullName.setVal(this.firstName.getVal() + " " + this.lastName.getVal());
     }
 
     @Override

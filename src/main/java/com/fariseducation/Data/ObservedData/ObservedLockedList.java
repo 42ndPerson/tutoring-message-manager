@@ -31,6 +31,13 @@ public class ObservedLockedList<ContentType> extends ObservedDatum implements It
     public int size() {
         return this.contents.size();
     }
+
+    public void print() {
+        for(ContentType content : this.contents) {
+            System.out.println(content.toString());
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public ContentType[] getStaticArray() {
         return (ContentType[]) this.contents.toArray();

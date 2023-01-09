@@ -7,6 +7,7 @@ import com.fariseducation.Data.TimeGroup;
 import com.fariseducation.Data.ObservedData.DataManager;
 import com.fariseducation.UIBase.UIAlert;
 import com.fariseducation.UIBase.UIComponent;
+import com.fariseducation.UIBase.UIFrameConstraints;
 import com.fariseducation.UIBase.UIGroup;
 import com.fariseducation.UIBase.UISpacer;
 import com.fariseducation.UIBase.UIWindow;
@@ -31,95 +32,106 @@ public class TimeGroupEditorWindow {
     }
 
     private void spawn() {
-        this.window = new UIWindow("Time Group Editor", new UIComponent[] {
-            new UIGroup(UIAxis.VERTICAL, UIAlignment.NONE, new UIComponent[] {
+        this.window = (UIWindow)new UIWindow("Time Group Editor", new UIFrameConstraints(200, 200), new UIComponent[] {
+            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+                new UISpacer(3),
                 new UILabel("Name"),
-                new UITextField(null, false)
+                new UISpacer()
+            }),
+            new UITextField("", false)
+                .onTyping(
+                    (String val) -> {
+                        this.name = val;
+                    })
+                .setMaxSize(Integer.MAX_VALUE, 75),
+            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+                new UISpacer(3),
+                new UILabel("Start Date"),
+                new UISpacer()
+            }),
+            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+                new UITextField("Month", false)
                     .onTyping(
                         (String val) -> {
-                            this.name = val;
+                            this.sdm = val;
                         })
-                    .setMaxSize(50, 75),
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
-                    new UILabel("Start Date"),
-                    new UISpacer()
-                }),
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
-                    new UITextField("Month", false)
-                        .onTyping(
-                            (String val) -> {
-                                this.sdm = val;
-                            }),
-                    new UITextField("Day", false)
-                        .onTyping(
-                            (String val) -> {
-                                this.sdd = val;
-                            }),
-                    new UITextField("Year", false)
-                        .onTyping(
-                            (String val) -> {
-                                this.sdy = val;
-                            }),
-                }),
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
-                    new UILabel("End Date"),
-                    new UISpacer()
-                }),
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
-                    new UITextField("Month", false)
-                        .onTyping(
-                            (String val) -> {
-                                this.edm = val;
-                            }),
-                    new UITextField("Day", false)
-                        .onTyping(
-                            (String val) -> {
-                                this.edd = val;
-                            }),
-                    new UITextField("Year", false)
-                        .onTyping(
-                            (String val) -> {
-                                this.edy = val;
-                            }),
-                }),
+                    .setMaxSize(Integer.MAX_VALUE, 75),
+                new UITextField("Day", false)
+                    .onTyping(
+                        (String val) -> {
+                            this.sdd = val;
+                        })
+                    .setMaxSize(Integer.MAX_VALUE, 75),
+                new UITextField("Year", false)
+                    .onTyping(
+                        (String val) -> {
+                            this.sdy = val;
+                        })
+                    .setMaxSize(Integer.MAX_VALUE, 75),
+            }),
+            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+                new UISpacer(3),
+                new UILabel("End Date"),
+                new UISpacer()
+            }),
+            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+                new UITextField("Month", false)
+                    .onTyping(
+                        (String val) -> {
+                            this.edm = val;
+                        })
+                    .setMaxSize(Integer.MAX_VALUE, 75),
+                new UITextField("Day", false)
+                    .onTyping(
+                        (String val) -> {
+                            this.edd = val;
+                        })
+                    .setMaxSize(Integer.MAX_VALUE, 75),
+                new UITextField("Year", false)
+                    .onTyping(
+                        (String val) -> {
+                            this.edy = val;
+                        })
+                    .setMaxSize(Integer.MAX_VALUE, 75),
+            }),
+            new UISpacer(),
+            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
                 new UISpacer(),
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
-                    new UISpacer(),
-                    new UIButton("Cancel")
-                        .onPress(() -> {
-                            this.window.closeWindow();
-                        }),
-                    new UIButton("Save")
-                        .onPress(() -> {
-                            if(!name.equals("")) {
-                                LocalDate sd;
-                                LocalDate ed;
+                new UIButton("Cancel")
+                    .onPress(() -> {
+                        this.window.closeWindow();
+                    }),
+                new UIButton("Save")
+                    .onPress(() -> {
+                        if(!name.equals("")) {
+                            LocalDate sd;
+                            LocalDate ed;
+                            try {
+                                sd = LocalDate.of(
+                                    Integer.parseInt(sdy), 
+                                    Integer.parseInt(sdm), 
+                                    Integer.parseInt(sdd));
+                                
                                 try {
-                                    sd = LocalDate.of(
-                                        Integer.parseInt(sdy), 
-                                        Integer.parseInt(sdm), 
-                                        Integer.parseInt(sdd));
-                                    
-                                    try {
-                                        ed = LocalDate.of(
-                                            Integer.parseInt(edy), 
-                                            Integer.parseInt(edm), 
-                                            Integer.parseInt(edd));
+                                    ed = LocalDate.of(
+                                        Integer.parseInt(edy), 
+                                        Integer.parseInt(edm), 
+                                        Integer.parseInt(edd));
 
-                                        DataManager.getInstance().registerDatum(new TimeGroup(name, sd, ed));
-                                        this.window.closeWindow();
-                                    } catch(NumberFormatException | DateTimeException e) {
-                                        UIAlert.alert("Invalid end date.");
-                                    }
+                                    DataManager.getInstance().registerDatum(new TimeGroup(name, sd, ed));
+                                    this.window.closeWindow();
                                 } catch(NumberFormatException | DateTimeException e) {
-                                    UIAlert.alert("Invalid start date.");
+                                    UIAlert.alert("Invalid end date.");
                                 }
-                            } else {
-                                UIAlert.alert("Invalid name.");
+                            } catch(NumberFormatException | DateTimeException e) {
+                                UIAlert.alert("Invalid start date.");
                             }
-                        })
-                })
-            })
-        });
+                        } else {
+                            UIAlert.alert("Invalid name.");
+                        }
+                    })
+            }).setPreferredSize(5000, 100),
+        })
+            .setMinSize(200, 200);
     }
 }

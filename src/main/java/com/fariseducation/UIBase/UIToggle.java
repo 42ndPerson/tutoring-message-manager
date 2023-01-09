@@ -17,6 +17,8 @@ public class UIToggle extends UIComponent implements DataObserver {
         this.state = state;
         this.state.addObserver(this);
 
+        this.button = new JToggleButton();
+
         this.button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

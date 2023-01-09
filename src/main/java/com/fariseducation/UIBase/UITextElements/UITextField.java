@@ -11,16 +11,20 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
+import com.fariseducation.Data.ObservedData.DataObserver;
+import com.fariseducation.Data.ObservedData.ObservedGeneric;
 import com.fariseducation.UIBase.UIComponent;
 
-public class UITextField extends UIComponent {
+public class UITextField extends UIComponent implements DataObserver {
     private JTextComponent textField;
     private boolean isFocused;
-    private String text;
+    private ObservedGeneric<String> text;
     private DocumentListener listener;
+    private boolean userHasInteracted;
 
-    public UITextField(String defaultText, boolean multiLine) {
-        this.text = defaultText;
+    public UITextField(ObservedGeneric<String> text, boolean multiLine) {
+        this.text = text;
+        this.userHasInteracted = true;
         build(multiLine);
         updateText();
 
@@ -28,6 +32,25 @@ public class UITextField extends UIComponent {
             @Override
             public void focusGained(FocusEvent e) {
                 UITextField.this.isFocused = true;
+                checkFirstInteraction();
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                UITextField.this.isFocused = false;
+            }
+        });
+    }
+    public UITextField(String defaultText, boolean multiLine) {
+        this.text = new ObservedGeneric<String>(defaultText);
+        this.userHasInteracted = false;
+        build(multiLine);
+        updateText();
+
+        this.textField.addFocusListener(new FocusListener(){
+            @Override
+            public void focusGained(FocusEvent e) {
+                UITextField.this.isFocused = true;
+                checkFirstInteraction();
             }
             @Override
             public void focusLost(FocusEvent e) {
@@ -38,6 +61,7 @@ public class UITextField extends UIComponent {
     public UITextField(boolean multiLine) {
         this("", multiLine);
     }
+
     public UITextField onFocusGained(Runnable action) {
         this.textField.removeFocusListener(this.textField.getFocusListeners()[0]);
 
@@ -45,6 +69,7 @@ public class UITextField extends UIComponent {
             @Override
             public void focusGained(FocusEvent e) {
                 UITextField.this.isFocused = true;
+                checkFirstInteraction();
 
                 action.run();
             }
@@ -125,12 +150,21 @@ public class UITextField extends UIComponent {
     }
 
     protected void updateText() {
-        this.textField.setText(this.text);
+        this.textField.setText(this.text.getVal());
         this.textField.repaint();
+    }
+
+    private void checkFirstInteraction() {
+        if(!this.userHasInteracted) this.textField.setText("");
+        this.userHasInteracted = true;
     }
 
     @Override
     protected Component getAWTComponent() {
         return this.textField;
+    }
+    @Override
+    public void updateAfterDataChange() {
+        if(!this.isFocused) updateText();
     }
 }

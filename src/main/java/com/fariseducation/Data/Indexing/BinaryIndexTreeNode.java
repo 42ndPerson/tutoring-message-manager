@@ -6,6 +6,7 @@ import java.util.function.Function;
 
 import com.fariseducation.Data.ManagedData;
 
+@SuppressWarnings("rawtypes")
 public class BinaryIndexTreeNode extends ManagedData implements TreeNode<BinaryIndexTreeNode> {
     private Comparable key;
     private Object element;
@@ -69,5 +70,20 @@ public class BinaryIndexTreeNode extends ManagedData implements TreeNode<BinaryI
     @Override
     public void save() {
         super.save("/MessageManagerData/BinaryIndexTrees/");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof BinaryIndexTreeNode) {
+            BinaryIndexTreeNode node = (BinaryIndexTreeNode)o;
+
+            return 
+                this.key==node.key && 
+                this.element==node.key && 
+                this.parent==node.parent && 
+                this.leftChild==node.leftChild &&
+                this.rightChild==node.rightChild;
+        }
+        return false;
     }
 }

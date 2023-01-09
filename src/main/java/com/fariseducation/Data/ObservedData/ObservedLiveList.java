@@ -38,8 +38,6 @@ public class ObservedLiveList<ContentType> extends ObservedLockedList<ContentTyp
     }
     @SuppressWarnings("unchecked")
     public boolean isMember(Object o) {
-        System.out.println("Member check");
-        
         try {
             System.out.println(this.memberTest.apply((ContentType)o));
             return this.memberTest.apply((ContentType)o);
@@ -50,10 +48,19 @@ public class ObservedLiveList<ContentType> extends ObservedLockedList<ContentTyp
     }
 
     protected void addMember(ContentType member) {
-        if(!isMember(member)) this.contents.add(member);
+        System.out.println("Member Addition Check");
+        if(!contains(member)) {
+            this.contents.add(member);
+            System.out.println("Member Added");
+            update();
+        }
     }
     protected void removeMember(ContentType member) {
-        if(isMember(member)) this.contents.remove(member);
+        if(contains(member)) {
+            this.contents.remove(member);
+            System.out.println("Member Added");
+            update();
+        }
     }
 
     @Override

@@ -16,7 +16,7 @@ public class UIWindow extends UIComponent {
     public UIWindow(String title, UIFrameConstraints constraints, UIComponent[] components) {
         this.frame = new JFrame(title);
         this.group = new UIGroup(
-            UIAxis.HORIZONTAL, 
+            UIAxis.VERTICAL, 
             UIAlignment.LEADING,
             components);
         this.group.setParent(this);

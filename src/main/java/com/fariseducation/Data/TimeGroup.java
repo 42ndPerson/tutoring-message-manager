@@ -1,5 +1,7 @@
 package com.fariseducation.Data;
 
+import java.time.LocalDate;
+
 import com.fariseducation.Data.ObservedData.ObservedDate;
 import com.fariseducation.Data.ObservedData.ObservedGeneric;
 
@@ -13,6 +15,11 @@ public class TimeGroup extends ManagedDataSource {
     private ObservedDate startDate;
     private ObservedDate endDate;
 
+    public TimeGroup(String name, LocalDate startDate, LocalDate endDate) {
+        this.name = new ObservedGeneric<String>(name);
+        this.startDate = new ObservedDate(startDate);
+        this.endDate = new ObservedDate(endDate);
+    }
     public TimeGroup(String name, ObservedDate startDate, ObservedDate endDate) {
         this.name = new ObservedGeneric<String>(name);
         this.startDate = startDate;

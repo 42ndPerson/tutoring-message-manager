@@ -33,4 +33,9 @@ public class ObservedDate extends ObservedDatum {
         if(o instanceof ObservedDate) return this.date.equals(((ObservedDate)o).date);
         return false;
     }
+
+    @Override
+    public String toString() {
+        return this.date.toString();
+    }
 }

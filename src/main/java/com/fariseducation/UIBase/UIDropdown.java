@@ -25,16 +25,20 @@ public class UIDropdown<ContentType> extends UIComponent implements DataObserver
 
         this.displayStringExtractor = displayStringExtractor;
 
+        this.dropdown = new JComboBox<String>();
+
         build();
     }
 
-    public void onSelect(Consumer<ContentType> behavior) {
+    public UIDropdown<ContentType> onSelect(Consumer<ContentType> behavior) {
         this.dropdown.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 behavior.accept(getSelected());; 
             }
         });
+
+        return this;
     }
     public void build() {
         createDisplayStrings();
@@ -43,14 +47,14 @@ public class UIDropdown<ContentType> extends UIComponent implements DataObserver
     }
 
     private void createDisplayStrings() {
-        ArrayList<String> displayStrings = new ArrayList<String>();
-        displayStrings.add("---");
+        String[] displayStrings = new String[this.options.size()+1];
+        displayStrings[0] = "---";
 
-        for(ContentType content : this.options) {
-            displayStrings.add(displayStringExtractor.apply(content));
+        for(int i = 0; i < this.options.size(); i++) {
+            displayStrings[i+1] = this.displayStringExtractor.apply(this.options.get(i)); //The plus ones is to make space for the default option added above
         }
 
-        this.displayStrings = (String[])displayStrings.toArray();
+        this.displayStrings = displayStrings;
     }
     private ContentType getSelected() {
         if(this.dropdown.getSelectedIndex() == 0) return null;
