@@ -2,7 +2,6 @@ package com.fariseducation;
 
 import com.fariseducation.Data.Guardian;
 import com.fariseducation.Data.GuardianshipRelationship;
-import com.fariseducation.Data.Session;
 import com.fariseducation.Data.Student;
 import com.fariseducation.Data.ObservedData.DataManager;
 import com.fariseducation.Data.ObservedData.ObservedDatum;
@@ -19,7 +18,6 @@ import com.fariseducation.UIBase.UIScrollContainer;
 import com.fariseducation.UIBase.UISpacer;
 import com.fariseducation.UIBase.UIToggle;
 import com.fariseducation.UIBase.UIWindow;
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 import com.fariseducation.UIBase.UITextElements.UIButton;
 import com.fariseducation.UIBase.UITextElements.UILabel;
@@ -58,8 +56,8 @@ public class GuardianEditorWindow {
 
     private void spawn() {
         this.window = (UIWindow)new UIWindow("Guardian Editor", new UIFrameConstraints(700, 500), new UIComponent[]{
-            new UIGroup(UIAxis.VERTICAL, UIAlignment.NONE, new UIComponent[]{
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+            new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                     new UISpacer(3),
                     new UILabel("First Name"),
                     new UISpacer()
@@ -69,7 +67,7 @@ public class GuardianEditorWindow {
                         this.guardian.getFirstName().setVal(text);;
                     })
                     .setMaxSize(Integer.MAX_VALUE, 35),
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                     new UISpacer(3),
                     new UILabel("Last Name"),
                     new UISpacer()
@@ -79,7 +77,7 @@ public class GuardianEditorWindow {
                         this.guardian.getLastName().setVal(text);;
                     })
                     .setMaxSize(Integer.MAX_VALUE, 35),
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                     new UISpacer(3),
                     new UILabel("Email"),
                     new UISpacer()
@@ -89,14 +87,14 @@ public class GuardianEditorWindow {
                         this.guardian.getEmail().setVal(text);;
                     })
                     .setMaxSize(Integer.MAX_VALUE, 35),
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                     new UIToggle(this.guardian.getSendEmailControl()),
                     new UILabel("Send Email")
                 }),
                 new UIConditionalDisplay(
                     this.guardianIsRegistered.inverse(),
                     new UIComponent[]{
-                    new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+                    new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                         new UIButton("Cancel")
                             .onPress(() -> {
                                 this.window.closeWindow();
@@ -125,7 +123,7 @@ public class GuardianEditorWindow {
                             new UISpacer()
                         }),
                         new UIScrollContainer(
-                            new UIGroup(UIAxis.VERTICAL, UIAlignment.NONE, new UIComponent[]{
+                            new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
                                 //Existing Students
                                 new UIListBuilder<GuardianshipRelationship>(
                                     DataManager.getInstance().getGuardianshipRealtionshipsForGuardian(new ObservedGeneric<Guardian>(this.guardian)), 
@@ -139,8 +137,7 @@ public class GuardianEditorWindow {
                                                 })
                                         });
                                     }, 
-                                    UIAxis.VERTICAL, 
-                                    UIAlignment.LEADING),
+                                    UIAxis.VERTICAL),
                                 new UISpacer()
                             })
                         ),
@@ -152,7 +149,7 @@ public class GuardianEditorWindow {
                                 new UISpacer()
                             }),
                             //Add new Student
-                            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+                            new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                                 new UIDropdown<Student>(
                                     DataManager.getInstance().getStudents(), 
                                     (Student student) -> {

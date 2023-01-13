@@ -1,7 +1,6 @@
 package com.fariseducation;
 
 import com.fariseducation.UIBase.UIWindow;
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 import com.fariseducation.UIBase.UITextElements.UIButton;
 import com.fariseducation.UIBase.UITextElements.UILabel;
@@ -10,9 +9,14 @@ import com.fariseducation.Data.Student;
 import com.fariseducation.Data.TimeGroup;
 import com.fariseducation.Data.Tutor;
 
+import java.time.LocalDate;
+
 import com.fariseducation.Data.Guardian;
+import com.fariseducation.Data.Session;
 import com.fariseducation.Data.ObservedData.DataManager;
+import com.fariseducation.Data.ObservedData.ObservedDatum;
 import com.fariseducation.Data.ObservedData.ObservedGeneric;
+import com.fariseducation.Data.ObservedData.ObservedLiveValue;
 import com.fariseducation.UIBase.UIAlert;
 import com.fariseducation.UIBase.UIComponent;
 import com.fariseducation.UIBase.UIGroup;
@@ -36,12 +40,18 @@ public class PrimaryWindow {
 
     private void spawn() {
         new UIWindow("Message Manager", new UIComponent[]{
-            new UIGroup(UIAxis.VERTICAL, UIAlignment.NONE, new UIComponent[]{
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+            new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                     new UIButton("Load Data")
+                        .onPress(() -> {
+                            new DataLoadingWindow();
+                        })
                         .format()
                         .setMaxSize(50, null),
                     new UIButton("Create Template")
+                        .onPress(() -> {
+                            new TemplateEditorWindow();
+                        })
                         .format()
                         .setMaxSize(50, null),
                     new UIButton("View Students")
@@ -62,19 +72,12 @@ public class PrimaryWindow {
                         })
                         .format()
                         .setMaxSize(50, null),
-                    new UISpacer(),
-                    new UIButton("Search")
-                        .onPress(() -> {
-                            DataManager.getInstance().printRegisteredLiveLists();
-                            System.out.println(DataManager.getInstance().getTimeGroups().size());
-                        })
-                        .format()
-                        .setMaxSize(50, null),
+                    new UISpacer()
                 }),
                 new UISeparator(),
-                new UIGroup(UIAxis.HORIZONTAL, UIAlignment.CENTER, new UIComponent[]{
-                    new UIGroup(UIAxis.VERTICAL, UIAlignment.NONE, new UIComponent[]{
-                        new UIGroup(UIAxis.HORIZONTAL, UIAlignment.LEADING, new UIComponent[]{
+                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                    new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                        new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                             new UISpacer(5),
                             new UILabel("Time Groups")
                                 .format(
@@ -91,90 +94,93 @@ public class PrimaryWindow {
                             new UIListBuilder<TimeGroup>(
                                 DataManager.getInstance().getTimeGroups(), 
                                 (TimeGroup val) -> {
-                                    return new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
-                                        new UIButton(val.getName(), true),
+                                    return new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                        new UIButton(val.getName(), true)
+                                            .onPress(() -> {
+                                                if(this.selectedTimeGroup.getVal()!=val) this.selectedTimeGroup.setVal(val);
+                                                else this.selectedTimeGroup.setVal(TimeGroup.BLANK);
+                                            }),
                                         new UIIndicator<ObservedGeneric<TimeGroup>>(
                                             new ObservedGeneric<TimeGroup>(val),
                                             this.selectedTimeGroup, 
                                             50, 
-                                            50)
+                                            25)
                                     });
                                 }, 
-                                UIAxis.VERTICAL, 
-                                UIAlignment.LEADING)
+                                UIAxis.VERTICAL)
                         ).setPreferredSize(600,3000)
                     }),
                     new UISeparator(),
-                    new UIGroup(UIAxis.VERTICAL, UIAlignment.NONE, new UIComponent[]{
-                        new UIGroup(UIAxis.HORIZONTAL, UIAlignment.LEADING, new UIComponent[]{
+                    new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                        new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                             new UISpacer(5),
                             new UILabel("Students")
                                 .format(
                                     true, 
                                 false, 
                                 1),
-                            new UIButton("+")
+                            /*new UIButton("+")
                                 .onPress(() -> {
                                     if(this.selectedTimeGroup != null) new StudentEditorWindow();
                                     else UIAlert.alert("Select a time group to add a student to.");
-                                })
+                                })*/
                         }),
                         new UISeparator(),
                         new UIScrollContainer(
                             new UIListBuilder<Student>(
-                                DataManager.getInstance().getStudentsForTimeGroup(this.selectedTimeGroup), 
+                                DataManager.getInstance().getStudentsForTimeGroup(this.selectedTimeGroup),
                                 (Student val) -> {
-                                    return new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
-                                        new UIButton(val.getName(), true),
+                                    return new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                        new UIButton(val.getName(), true)
+                                            .onPress(() -> {
+                                                this.selectedStudent.setVal(val);
+                                            }),
                                         new UIIndicator<ObservedGeneric<Student>>(
                                             new ObservedGeneric<Student>(val),
                                             this.selectedStudent, 
                                             50, 
-                                            50)
+                                            25)
                                     });
                                 }, 
-                                UIAxis.VERTICAL, 
-                                UIAlignment.LEADING)
+                                UIAxis.VERTICAL)
                         ).setPreferredSize(600,3000)
                     }),
                     new UISeparator(),
-                    new UIGroup(UIAxis.VERTICAL, UIAlignment.LEADING, new UIComponent[]{
-                        new UIGroup(UIAxis.HORIZONTAL, UIAlignment.LEADING, new UIComponent[]{
+                    new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                        new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                             new UISpacer(10),
                             new UILabel("Student Name")
                                 .format(true, false, 2),
                             new UIButton("Edit")
+                                .onPress(() -> {
+                                    if(!this.selectedStudent.getVal().equals(Student.BLANK)) new StudentEditorWindow(this.selectedStudent.getVal());
+                                })
                                 .setMaxSize(50, null)
                         }),
                         new UISeparator(),
-                        new UIGroup(UIAxis.VERTICAL, UIAlignment.LEADING, new UIComponent[]{
-                            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+                        new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                            new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                                 new UISpacer(5),
                                 new UILabel("Guardians")
                                     .format(false, false, 1),
-                                new UIButton("+")
-                                    .setMaxSize(50, null),
                                 new UISpacer()
                             }),
                             new UIScrollContainer(
                                 new UIListBuilder<Guardian>(
                                     DataManager.getInstance().getGuardiansForStudent(this.selectedStudent), 
                                     (val) -> {
-                                        return new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+                                        return new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                                             new UILabel(((Guardian)val).getName()),
                                             new UISpacer(),
                                             new UIToggle(((Guardian)val).getSendEmailControl())
                                         });
                                     }, 
-                                    UIAxis.VERTICAL, 
-                                    UIAlignment.LEADING)
+                                    UIAxis.VERTICAL)
                             ).setPreferredSize(600,3000),
-                            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+                            new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                                 new UISpacer(5),
                                 new UILabel("Tutors")
                                     .format(false, false, 1),
-                                new UIButton("+")
-                                    .setMaxSize(50, null),
                                 new UISpacer()
                             }),
                             new UIScrollContainer(
@@ -183,25 +189,30 @@ public class PrimaryWindow {
                                     (val) -> {
                                         return new UILabel(val.getName());
                                     }, 
-                                    UIAxis.VERTICAL, 
-                                    UIAlignment.LEADING)
+                                    UIAxis.VERTICAL)
                             ).setPreferredSize(600,3000),
                         }),
                         new UISpacer(10),
-                        new UIGroup(UIAxis.HORIZONTAL, UIAlignment.LEADING, new UIComponent[]{
+                        new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                             new UILabel("Message")
                                 .format(false, false, 1),
                             new UISpacer(),
                             new UIButton("Revert to Template")
                         }),
                         new UIScrollContainer(
-                            new UIGroup(UIAxis.VERTICAL, UIAlignment.NONE, new UIComponent[]{
-                                new UITextField(true)
+                            new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                                new UITextField(
+                                    new ObservedLiveValue<String>(
+                                        new ObservedDatum[]{this.selectedTimeGroup, this.selectedStudent}, 
+                                        () -> {
+                                            return "";// + this.selectedStudent.getVal().getMessageForTimeGroup(this.selectedTimeGroup.getVal());
+                                        }),
+                                        true)
                             })
-                                .setPreferredSize(null, 500)  
+                                .setPreferredSize(100, 500)  
                         )
                             .setMinSize(null, 125),
-                        new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[]{
+                        new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                             new UISpacer(),
                             new UIButton("Send")
                                 .setMaxSize(100, null)

@@ -39,7 +39,7 @@ public class TutorListWindow {
                             new UISpacer(),
                             new UIButton("Edit")
                                 .onPress(() -> {
-                                    //new TutorEditorWindow(tutor);
+                                    new TutorEditorWindow(tutor);
                                 })
                         });
                     }, 
@@ -50,7 +50,7 @@ public class TutorListWindow {
                 new UISpacer(),
                 new UIButton("+")
                     .onPress(() -> {
-                        //new TutorEditorWindow();
+                        new TutorEditorWindow();
                     }),
                 new UISpacer()
             }),

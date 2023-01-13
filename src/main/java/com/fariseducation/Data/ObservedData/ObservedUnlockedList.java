@@ -3,23 +3,23 @@ package com.fariseducation.Data.ObservedData;
 public class ObservedUnlockedList<ContentType> extends ObservedLockedList<ContentType> {
     public void add(ContentType element) {
         this.contents.add(element);
-        this.update();
+        update();
     }
     public void add(int index, ContentType element) {
         this.contents.add(index, element);
-        this.update();
+        update();
     }
     public void remove(ContentType element) {
         this.contents.remove(element);
-        this.update();
+        update();
     }
     public void remove(int index) {
         this.contents.remove(index);
-        this.update();
+        update();
     }
     public void clear() {
         this.contents.clear();
-        this.update();
+        update();
     }
 
     @Override

@@ -5,7 +5,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 
 public class UIWindow extends UIComponent {
@@ -16,8 +15,7 @@ public class UIWindow extends UIComponent {
     public UIWindow(String title, UIFrameConstraints constraints, UIComponent[] components) {
         this.frame = new JFrame(title);
         this.group = new UIGroup(
-            UIAxis.VERTICAL, 
-            UIAlignment.LEADING,
+            UIAxis.VERTICAL,
             components);
         this.group.setParent(this);
 

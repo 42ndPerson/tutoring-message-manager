@@ -1,6 +1,7 @@
 package com.fariseducation.Data.ObservedData;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class ObservedDate extends ObservedDatum {
     private LocalDate date;
@@ -36,6 +37,6 @@ public class ObservedDate extends ObservedDatum {
 
     @Override
     public String toString() {
-        return this.date.toString();
+        return this.date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     }
 }

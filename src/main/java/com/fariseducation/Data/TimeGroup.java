@@ -1,5 +1,6 @@
 package com.fariseducation.Data;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import com.fariseducation.Data.ObservedData.ObservedDate;
@@ -14,6 +15,9 @@ public class TimeGroup extends ManagedDataSource {
     private ObservedGeneric<String> name;
     private ObservedDate startDate;
     private ObservedDate endDate;
+    private ObservedGeneric<String> template = new ObservedGeneric<String>("");
+
+    private static final long serialVersionUID = -3841962726599067523L; //REMOVE; POTENTIAL ERROR SOURCE
 
     public TimeGroup(String name, LocalDate startDate, LocalDate endDate) {
         this.name = new ObservedGeneric<String>(name);
@@ -35,9 +39,12 @@ public class TimeGroup extends ManagedDataSource {
     public ObservedDate getEndDate() {
         return this.endDate;
     }
+    public ObservedGeneric<String> getTemplate() {
+        return this.template;
+    }
 
     public boolean isDateInRange(ObservedDate date) {
-        return date.isAfter(this.startDate) && date.isBefore(this.endDate);
+        return date.equals(this.startDate) || (date.isAfter(this.startDate) && date.isBefore(this.endDate));
     }
     public boolean containsSession(Session session) {
         return isDateInRange(session.getDate());
@@ -50,7 +57,17 @@ public class TimeGroup extends ManagedDataSource {
     } 
 
     @Override
+    public String toString() {
+        return this.name + ": (" + this.startDate.toString() + ", " + this.endDate.toString() + ")";
+    }
+
+    @Override
     public void save() {
         super.save("/MessageManagerData/TimeGroups/");
-    }  
+    } 
+    
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.template = new ObservedGeneric<String>("");
+    }
 }

@@ -6,41 +6,36 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
-import com.fariseducation.UIBase.UITextElements.UILabel;
 
 public class UIGroup extends UIComponent {
     private JPanel pane;
     private ArrayList<UIComponent> children;
     private UIAxis axis;
-    private UIAlignment alignment;
 
     public UIGroup(UIAxis axis, UIComponent[] components) {
-        this.build(axis, UIAlignment.NONE, components);
-    }
-    public UIGroup(UIAxis axis, UIAlignment alignment, UIComponent[] components) {
-        this.build(axis, alignment, components);
+        this.build(axis, components);
     }
 
-    private void build(UIAxis axis, UIAlignment alignment, UIComponent[] components) {
+    private void build(UIAxis axis, UIComponent[] components) {
         this.pane = new JPanel();
         this.children = new ArrayList<UIComponent>(); 
 
         this.axis = axis;
         this.pane.setLayout(new BoxLayout(this.pane,this.axis.getNumericValue()));
-        this.alignment = alignment;
 
         assembleChildren(components);
     }
     
     public void rebuild(UIComponent[] newComponents) {
         this.pane.removeAll();
-        this.children.add(
-            new UILabel("test")
-        );
+        this.children.clear();
+
+        System.out.println("NC: " + newComponents.length);
+
         assembleChildren(newComponents);
         this.pane.revalidate();
+        this.pane.repaint();
 
         System.out.println(this.children.size());
         System.out.println("UIGroup Update");
@@ -51,23 +46,13 @@ public class UIGroup extends UIComponent {
      * Takes and array of UIComponents and adds them as children to the UIGroup
      */
     private void assembleChildren(UIComponent[] components) {
-
-        if (
-            !(this.alignment == UIAlignment.NONE) && 
-            (this.alignment == UIAlignment.TRAILING || this.alignment == UIAlignment.CENTER)) {
-            addChild(new UISpacer().inform(this.axis, this.alignment));
-        }
-
         for(UIComponent component: components) {
-            component.inform(this.axis, this.alignment);
+            System.out.println("*****");
+            component.inform(this.axis);
             addChild(component);
         }
 
-        if (
-            !(this.alignment == UIAlignment.NONE) && 
-            (this.alignment == UIAlignment.LEADING || this.alignment == UIAlignment.CENTER)) {
-            addChild(new UISpacer().inform(this.axis, this.alignment));
-        }
+        System.out.println("CC: " + this.pane.getComponentCount());
     }
     /**
      * @param child

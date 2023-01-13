@@ -2,7 +2,9 @@ package com.fariseducation.Data.ObservedData;
 
 public class ObservedGeneric<ContentType> extends ObservedDatum {
     protected ContentType val;
-
+    
+    private static final long serialVersionUID = -4692484524987273961L;
+    
     public ObservedGeneric(ContentType val) {
         this.val = val;
     }
@@ -12,6 +14,7 @@ public class ObservedGeneric<ContentType> extends ObservedDatum {
     }
     public void setVal(ContentType val) {
         this.val = val;
+        System.out.println("Update: " + val);
         update();
     }
 
@@ -23,5 +26,9 @@ public class ObservedGeneric<ContentType> extends ObservedDatum {
         } catch(ClassCastException e) {
             return false;
         }
+    }
+    @Override
+    public String toString() {
+        return this.val.toString();
     }
 }

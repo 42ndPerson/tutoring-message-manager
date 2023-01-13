@@ -1,11 +1,15 @@
 package com.fariseducation.Data.ObservedData;
 
+import java.io.IOException;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import com.fariseducation.Data.Student;
 
 public class ObservedLiveList<ContentType> extends ObservedLockedList<ContentType> implements DataObserver {
     private Function<ContentType,Boolean> memberTest;
     private Supplier<ObservedLockedList<ContentType>> source;
+    private ObservedDatum[] observedVariables;
 
     public ObservedLiveList(
         Supplier<ObservedLockedList<ContentType>> source,
@@ -23,8 +27,9 @@ public class ObservedLiveList<ContentType> extends ObservedLockedList<ContentTyp
         Function<ContentType,Boolean> memberTest)
     {
         this(source, memberTest);
+        this.observedVariables = observedVariables;
 
-        for(ObservedDatum od : observedVariables) {
+        for(ObservedDatum od : this.observedVariables) {
             od.addObserver(this);
         }
     }
@@ -33,8 +38,13 @@ public class ObservedLiveList<ContentType> extends ObservedLockedList<ContentTyp
         this.contents.clear();
 
         for(ContentType content : source.get()) {
-            if(memberTest.apply(content)) this.contents.add(content);
+            if(memberTest.apply(content)) {
+                this.contents.add(content);
+                System.out.println("    " + content.toString());
+            }
         }
+
+        update();
     }
     @SuppressWarnings("unchecked")
     public boolean isMember(Object o) {
@@ -58,13 +68,22 @@ public class ObservedLiveList<ContentType> extends ObservedLockedList<ContentTyp
     protected void removeMember(ContentType member) {
         if(contains(member)) {
             this.contents.remove(member);
-            System.out.println("Member Added");
+            //if(member instanceof Student) System.out.println("UILiveList Member Removed");
             update();
         }
+        if(member instanceof Student) System.out.println("UILiveList Member Removed");
     }
 
     @Override
     public void updateAfterDataChange() {
+        System.out.println("ObservedLiveList Update: " + this.toString());
         build();
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        for(ObservedDatum od : this.observedVariables) {
+            od.addObserver(this);
+        }
     }
 }

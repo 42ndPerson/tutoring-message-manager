@@ -4,14 +4,13 @@ import java.awt.Component;
 
 import javax.swing.JSeparator;
 
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 
 public class UISeparator extends UIComponent {
     private UIAxis axis;
 
     @Override
-    protected UIComponent inform(UIAxis axis, UIAlignment alignment) {
+    protected UIComponent inform(UIAxis axis) {
         this.axis = axis;
 
         return this;

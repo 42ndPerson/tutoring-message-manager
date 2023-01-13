@@ -4,7 +4,6 @@ import java.awt.Component;
 
 import com.fariseducation.Data.ObservedData.DataObserver;
 import com.fariseducation.Data.ObservedData.ObservedGeneric;
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 
 public class UIConditionalDisplay extends UIComponent implements DataObserver {
@@ -22,7 +21,7 @@ public class UIConditionalDisplay extends UIComponent implements DataObserver {
         this.showConditional.addObserver(this);
 
         this.contents = contents;
-        this.contentGroup = new UIGroup(UIAxis.VERTICAL, UIAlignment.NONE, this.contents);
+        this.contentGroup = new UIGroup(UIAxis.VERTICAL, this.contents);
 
         this.axis = axis;
     }

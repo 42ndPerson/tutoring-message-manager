@@ -3,44 +3,36 @@ package com.fariseducation.Data.ObservedData;
 import java.io.IOException;
 import java.util.function.Supplier;
 
-public class ObservedLiveBoolean extends ObservedGeneric<Boolean> implements DataObserver {
+public class ObservedLiveValue<ContentType> extends ObservedGeneric<ContentType> implements DataObserver {
     private ObservedDatum[] observedVariables;
-    private Supplier<Boolean> stateSupplier;
-    private ObservedLiveBoolean inverse;
+    private Supplier<ContentType> valSupplier;
 
-    public ObservedLiveBoolean(ObservedDatum[] observedVariables, Supplier<Boolean> stateSupplier) {
-        super(stateSupplier.get());
+    public ObservedLiveValue(ObservedDatum[] observedVariables, Supplier<ContentType> valSupplier) {
+        super(valSupplier.get());
 
         for(ObservedDatum datum : observedVariables) datum.addObserver(this);
         this.observedVariables = observedVariables.clone();
 
-        this.stateSupplier = stateSupplier;
+        this.valSupplier = valSupplier;
     }
 
-    public Boolean getVal() {
+    public ContentType getVal() {
         return this.val;
-    }
-
-    public ObservedLiveBoolean inverse() {
-        this.inverse = new ObservedLiveBoolean(observedVariables, () -> {
-            return !this.stateSupplier.get();
-        });
-
-        return this.inverse;
     }
 
     @Override
     public void updateAfterDataChange() {
-        Boolean oldState = this.val;
-        this.val = this.stateSupplier.get();
+        ContentType oldState = this.val;
+        this.val = this.valSupplier.get();
 
         if(this.val!=oldState) update();
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean equals(Object o) {
         if(o instanceof ObservedLiveBoolean) {
-            return this.observedVariables==((ObservedLiveBoolean)o).observedVariables;
+            return this.observedVariables==((ObservedLiveValue<ContentType>)o).observedVariables;
         }
         return false;
     }

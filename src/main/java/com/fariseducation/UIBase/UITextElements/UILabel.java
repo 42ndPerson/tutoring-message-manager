@@ -6,14 +6,16 @@ import javax.swing.JLabel;
 
 import com.fariseducation.Data.ObservedData.ObservedGeneric;
 
+@SuppressWarnings("rawtypes")
 public class UILabel extends UITextElement {
     private JLabel label;
 
     public UILabel(String text) {
         super(text);
     }
-    public UILabel(ObservedGeneric<String> observedString) {
-        super(observedString);
+    public UILabel(ObservedGeneric observedGeneric) {
+        super(observedGeneric);
+        System.out.println("Label: " + observedGeneric.getVal());
     }
 
     @Override
@@ -22,7 +24,7 @@ public class UILabel extends UITextElement {
     }
     @Override
     protected void updateText() {
-        this.label.setText(getFormat().getStartCap() + getObservedString().getVal() + getFormat().getEndCap());
+        this.label.setText(getFormat().getStartCap() + getObserved().getVal().toString() + getFormat().getEndCap());
         this.label.repaint();
     }
 

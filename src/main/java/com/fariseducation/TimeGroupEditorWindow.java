@@ -11,7 +11,6 @@ import com.fariseducation.UIBase.UIFrameConstraints;
 import com.fariseducation.UIBase.UIGroup;
 import com.fariseducation.UIBase.UISpacer;
 import com.fariseducation.UIBase.UIWindow;
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 import com.fariseducation.UIBase.UITextElements.UIButton;
 import com.fariseducation.UIBase.UITextElements.UILabel;
@@ -33,7 +32,7 @@ public class TimeGroupEditorWindow {
 
     private void spawn() {
         this.window = (UIWindow)new UIWindow("Time Group Editor", new UIFrameConstraints(200, 200), new UIComponent[] {
-            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+            new UIGroup(UIAxis.HORIZONTAL, new UIComponent[] {
                 new UISpacer(3),
                 new UILabel("Name"),
                 new UISpacer()
@@ -44,12 +43,12 @@ public class TimeGroupEditorWindow {
                         this.name = val;
                     })
                 .setMaxSize(Integer.MAX_VALUE, 75),
-            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+            new UIGroup(UIAxis.HORIZONTAL, new UIComponent[] {
                 new UISpacer(3),
-                new UILabel("Start Date"),
+                new UILabel("Start Date (Inclusive)"),
                 new UISpacer()
             }),
-            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+            new UIGroup(UIAxis.HORIZONTAL, new UIComponent[] {
                 new UITextField("Month", false)
                     .onTyping(
                         (String val) -> {
@@ -69,12 +68,12 @@ public class TimeGroupEditorWindow {
                         })
                     .setMaxSize(Integer.MAX_VALUE, 75),
             }),
-            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+            new UIGroup(UIAxis.HORIZONTAL, new UIComponent[] {
                 new UISpacer(3),
-                new UILabel("End Date"),
+                new UILabel("End Date (Exclusive)"),
                 new UISpacer()
             }),
-            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+            new UIGroup(UIAxis.HORIZONTAL, new UIComponent[] {
                 new UITextField("Month", false)
                     .onTyping(
                         (String val) -> {
@@ -95,7 +94,7 @@ public class TimeGroupEditorWindow {
                     .setMaxSize(Integer.MAX_VALUE, 75),
             }),
             new UISpacer(),
-            new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+            new UIGroup(UIAxis.HORIZONTAL, new UIComponent[] {
                 new UISpacer(),
                 new UIButton("Cancel")
                     .onPress(() -> {

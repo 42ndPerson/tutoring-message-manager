@@ -5,7 +5,6 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.plaf.DimensionUIResource;
 
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 
 
@@ -19,7 +18,7 @@ public class UISpacer extends UIComponent {
     }
 
     @Override
-    protected UIComponent inform(UIAxis axis, UIAlignment alignment) {
+    protected UIComponent inform(UIAxis axis) {
         this.axis = axis;
 
         return this;

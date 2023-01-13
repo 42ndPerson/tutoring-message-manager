@@ -3,7 +3,6 @@ package com.fariseducation.UIBase;
 import java.awt.Component;
 import java.awt.Dimension;
 
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 
 public abstract class UIComponent {
@@ -118,6 +117,6 @@ public abstract class UIComponent {
             ));
             return this;
     }
-    protected UIComponent inform(UIAxis axis, UIAlignment alignment) { return this; }
+    protected UIComponent inform(UIAxis axis) { return this; }
     protected abstract Component getAWTComponent();
 }

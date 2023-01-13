@@ -18,12 +18,14 @@ import com.fariseducation.UIBase.UIComponent;
 public class UITextField extends UIComponent implements DataObserver {
     private JTextComponent textField;
     private boolean isFocused;
-    private ObservedGeneric<String> text;
+    private ObservedGeneric text;
     private DocumentListener listener;
     private boolean userHasInteracted;
 
-    public UITextField(ObservedGeneric<String> text, boolean multiLine) {
+    public UITextField(ObservedGeneric text, boolean multiLine) {
         this.text = text;
+        this.text.addObserver(this);
+
         this.userHasInteracted = true;
         build(multiLine);
         updateText();
@@ -150,8 +152,10 @@ public class UITextField extends UIComponent implements DataObserver {
     }
 
     protected void updateText() {
-        this.textField.setText(this.text.getVal());
+        System.out.println("apiubf");
+        this.textField.setText(this.text.getVal().toString());
         this.textField.repaint();
+        this.textField.revalidate();
     }
 
     private void checkFirstInteraction() {
@@ -165,6 +169,6 @@ public class UITextField extends UIComponent implements DataObserver {
     }
     @Override
     public void updateAfterDataChange() {
-        if(!this.isFocused) updateText();
+        if(!this.isFocused || true) updateText();
     }
 }

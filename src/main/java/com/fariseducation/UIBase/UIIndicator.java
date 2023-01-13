@@ -8,11 +8,10 @@ import javax.swing.JPanel;
 
 import com.fariseducation.Data.ObservedData.DataObserver;
 import com.fariseducation.Data.ObservedData.ObservedDatum;
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 
 public class UIIndicator<ConditionDataType extends ObservedDatum> extends UIComponent implements DataObserver {
-    private JPanel panel = null;
+    private JPanel panel = new JPanel();
     private ConditionDataType matchCondition;
     private ConditionDataType controllingVariable;
     private int maxWidth;
@@ -50,12 +49,13 @@ public class UIIndicator<ConditionDataType extends ObservedDatum> extends UIComp
                 break;
         }
 
-        if(this.panel == null) this.panel = new JPanel();
+        //if(this.panel == null) this.panel = new JPanel();
         this.panel.setBackground(Color.DARK_GRAY);
         this.panel.setMaximumSize(new Dimension(
             maxWidth,
             maxHeight
         ));
+        this.panel.revalidate();
     }
 
     @Override
@@ -66,7 +66,7 @@ public class UIIndicator<ConditionDataType extends ObservedDatum> extends UIComp
     }
 
     @Override
-    protected UIComponent inform(UIAxis axis, UIAlignment alignment) { //Changes which direction the component shrinks to zero in
+    protected UIComponent inform(UIAxis axis) { //Changes which direction the component shrinks to zero in
         this.axis = axis;
 
         return this;

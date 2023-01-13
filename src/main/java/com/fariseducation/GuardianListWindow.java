@@ -9,7 +9,6 @@ import com.fariseducation.UIBase.UIListBuilder;
 import com.fariseducation.UIBase.UIScrollContainer;
 import com.fariseducation.UIBase.UISpacer;
 import com.fariseducation.UIBase.UIWindow;
-import com.fariseducation.UIBase.UIEnums.UIAlignment;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 import com.fariseducation.UIBase.UITextElements.UIButton;
 import com.fariseducation.UIBase.UITextElements.UILabel;
@@ -33,7 +32,7 @@ public class GuardianListWindow {
                 new UIListBuilder<Guardian>(
                     DataManager.getInstance().getGuardians(), 
                     (Guardian guardian) -> {
-                        return new UIGroup(UIAxis.HORIZONTAL, UIAlignment.NONE, new UIComponent[] {
+                        return new UIGroup(UIAxis.HORIZONTAL, new UIComponent[] {
                             new UILabel(guardian.getName()),
                             new UISpacer(),
                             new UIButton("Edit")

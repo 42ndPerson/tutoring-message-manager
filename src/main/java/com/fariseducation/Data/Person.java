@@ -1,5 +1,7 @@
 package com.fariseducation.Data;
 
+import java.io.IOException;
+
 import com.fariseducation.Data.ObservedData.DataObserver;
 import com.fariseducation.Data.ObservedData.ObservedGeneric;
 
@@ -40,11 +42,17 @@ public abstract class Person extends ManagedDataSource implements DataObserver {
         if (o instanceof Person) {
             Person person = (Person)o;
 
-            return 
-                this.firstName.equals(person.firstName) &&
-                this.lastName.equals(person.lastName);
+            return this.getUUID().equals(person.getUUID());
+                //this.firstName.equals(person.firstName) &&
+                //this.lastName.equals(person.lastName);
         }
         
         return false;
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.firstName.addObserver(this);
+        this.lastName.addObserver(this);
     }
 }
