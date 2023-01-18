@@ -15,6 +15,7 @@ import com.fariseducation.Data.ObservedData.DataObserver;
 import com.fariseducation.Data.ObservedData.ObservedGeneric;
 import com.fariseducation.UIBase.UIComponent;
 
+@SuppressWarnings("rawtypes")
 public class UITextField extends UIComponent implements DataObserver {
     private JTextComponent textField;
     private boolean isFocused;
@@ -25,6 +26,8 @@ public class UITextField extends UIComponent implements DataObserver {
     public UITextField(ObservedGeneric text, boolean multiLine) {
         this.text = text;
         this.text.addObserver(this);
+        System.out.println("UITFI: " + text.stringObservers());
+        System.out.println("UITFIO: " + text);
 
         this.userHasInteracted = true;
         build(multiLine);
@@ -146,16 +149,23 @@ public class UITextField extends UIComponent implements DataObserver {
         return this.isFocused;
     }
 
+    public void setFocusable(boolean focusable) {
+        this.textField.setFocusable(focusable);
+    }
+
     protected void build(boolean multiLine) {
-        if(multiLine) this.textField = new JTextArea();
+        if(multiLine) {
+            JTextArea textArea = new JTextArea();
+            textArea.setWrapStyleWord(true);
+            textArea.setLineWrap(true);
+
+            this.textField = textArea;
+        }
         else this.textField = new JTextField();
     }
 
     protected void updateText() {
-        System.out.println("apiubf");
-        this.textField.setText(this.text.getVal().toString());
-        this.textField.repaint();
-        this.textField.revalidate();
+        if(!this.isFocused) this.textField.setText(this.text.getVal().toString());
     }
 
     private void checkFirstInteraction() {

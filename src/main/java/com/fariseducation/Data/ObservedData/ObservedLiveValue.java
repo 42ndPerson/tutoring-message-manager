@@ -12,6 +12,7 @@ public class ObservedLiveValue<ContentType> extends ObservedGeneric<ContentType>
 
         for(ObservedDatum datum : observedVariables) datum.addObserver(this);
         this.observedVariables = observedVariables.clone();
+        for(ObservedDatum datum : observedVariables) System.out.println("OLV: " + datum.stringObservers());
 
         this.valSupplier = valSupplier;
     }
@@ -35,6 +36,10 @@ public class ObservedLiveValue<ContentType> extends ObservedGeneric<ContentType>
             return this.observedVariables==((ObservedLiveValue<ContentType>)o).observedVariables;
         }
         return false;
+    }
+    @Override
+    public String toString() {
+        return this.hashCode()+"";
     }
 
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {

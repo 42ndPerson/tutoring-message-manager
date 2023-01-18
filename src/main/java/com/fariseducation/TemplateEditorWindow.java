@@ -1,7 +1,6 @@
 package com.fariseducation;
 
 import com.fariseducation.UIBase.UIWindow;
-import com.fariseducation.Data.Student;
 import com.fariseducation.Data.TimeGroup;
 import com.fariseducation.Data.ObservedData.DataManager;
 import com.fariseducation.Data.ObservedData.ObservedDatum;
@@ -13,18 +12,16 @@ import com.fariseducation.UIBase.UIConditionalDisplay;
 import com.fariseducation.UIBase.UIDropdown;
 import com.fariseducation.UIBase.UIFrameConstraints;
 import com.fariseducation.UIBase.UIGroup;
-import com.fariseducation.UIBase.UIListBuilder;
 import com.fariseducation.UIBase.UISpacer;
 import com.fariseducation.UIBase.UIScrollContainer;
-import com.fariseducation.UIBase.UIAlert;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
-import com.fariseducation.UIBase.UITextElements.UIButton;
 import com.fariseducation.UIBase.UITextElements.UILabel;
 import com.fariseducation.UIBase.UITextElements.UITextField;
 
 public class TemplateEditorWindow {
     private UIWindow window;
     private ObservedGeneric<TimeGroup> timeGroup = new ObservedGeneric<TimeGroup>(TimeGroup.BLANK);
+    private ObservedGeneric<String> template = new ObservedGeneric<String>("");
 
     public TemplateEditorWindow() {
         spawn();
@@ -40,13 +37,21 @@ public class TemplateEditorWindow {
             }),
             new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                 new UISpacer(3),
+                new UILabel("Select Time Group of Template: ")
+                    .format(false, false, -1),
                 new UIDropdown<TimeGroup>(
                     DataManager.getInstance().getTimeGroups(), 
                     (TimeGroup timeGroup) -> {
                         return timeGroup.getName().getVal();
                     })
                         .onSelect((TimeGroup timeGroup) -> {
-                            if(timeGroup != null) this.timeGroup.setVal(timeGroup);
+                            if(timeGroup != null) {
+                                System.out.println("asdhobvpisduv:" + timeGroup.getTemplate().getVal());
+                                this.timeGroup.setVal(timeGroup);
+                                this.template.setVal(timeGroup.getTemplate().getVal());
+                            } else {
+                                this.timeGroup.setVal(TimeGroup.BLANK);
+                            }
                         }),
                 new UISpacer()
             }),
@@ -57,7 +62,10 @@ public class TemplateEditorWindow {
                         return this.timeGroup.getVal() == TimeGroup.BLANK;
                     }), 
                 new UIComponent[]{
-                    new UISpacer()
+                    new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                        new UISpacer()
+                    })
+                        .setPreferredSize(null, 5000)
             }),
             new UIConditionalDisplay(
                 new ObservedLiveBoolean(
@@ -71,51 +79,75 @@ public class TemplateEditorWindow {
                         new UIScrollContainer(
                             new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
                                 new UITextField(
-                                    new ObservedLiveValue<ObservedGeneric<String>>(
+                                    new ObservedLiveValue<>(
                                         new ObservedDatum[]{this.timeGroup}, 
-                                        () -> { return this.timeGroup.getVal().getTemplate(); }), true)
+                                        () -> {
+                                            return this.timeGroup.getVal().getTemplate();
+                                        }
+                                    ), 
+                                    true
+                                )
                                     .onTyping((String val) -> {
-                                        if(this.timeGroup.getVal() != null) this.timeGroup.getVal().getTemplate().setVal(val);
+                                        if(this.timeGroup.getVal() != null) {
+                                            this.timeGroup.getVal().getTemplate().setVal(val);
+                                        }
                                     })
                             })
-                                .setPreferredSize(null, 500)  
                         )
-                            .setMinSize(null, 125),
+                            .setPreferredSize(null, 100),
                         new UISpacer(3),
-                        new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
-                            new UILabel("Add Insertion Point For:"),
-                            new UIButton("Student Name")
-                                .onPress(() -> {
-                                    this.timeGroup.getVal().getTemplate().setVal(this.timeGroup.getVal().getTemplate().getVal() + "%SN%");
+                        new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                            new UISpacer(5),
+                            new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                    new UILabel("Add Insertion Point For:"),
+                                    new UISpacer()
                                 }),
-                            new UIButton("Tutor Name(s)")
-                                .onPress(() -> {
-                                    this.timeGroup.getVal().getTemplate().setVal(this.timeGroup.getVal().getTemplate().getVal() + "%TN%");
+                                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                    new UILabel("Student Name : %SN%"),
+                                    new UISpacer()
                                 }),
-                            new UIButton("Parent Name(s)")
-                                .onPress(() -> {
-                                    this.timeGroup.getVal().getTemplate().setVal(this.timeGroup.getVal().getTemplate().getVal() + "%PN%");
+                                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                    new UILabel("Tutor Name(s): %TN%"),
+                                    new UISpacer()
                                 }),
-                            new UIButton("Tutoring Dates")
-                                .onPress(() -> {
-                                    this.timeGroup.getVal().getTemplate().setVal(this.timeGroup.getVal().getTemplate().getVal() + "%TD%");
+                                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                    new UILabel("Guardian Name(s): %GN%"),
+                                    new UISpacer()
                                 }),
-                            new UIButton("Total Hours")
-                                .onPress(() -> {
-                                    this.timeGroup.getVal().getTemplate().setVal(this.timeGroup.getVal().getTemplate().getVal() + "%TH%");
+                                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                    new UILabel("Tutoring Dates: %TD%"),
+                                    new UISpacer()
                                 }),
-                            new UIButton("Billing Total")
-                                .onPress(() -> {
-                                    this.timeGroup.getVal().getTemplate().setVal(this.timeGroup.getVal().getTemplate().getVal() + "%BT%");
+                                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                    new UILabel("Total Hours: %TH%"),
+                                    new UISpacer()
                                 }),
-                            new UISpacer()
+                                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                    new UILabel("Billing Total: %BT%"),
+                                    new UISpacer()
+                                }),
+                                new UISpacer()
+                            })
+                                .setPreferredSize(null, 5000),
+                            new UISpacer(15)
                         })
-                            .setMaxSize(100, null),
+                            //.setPreferredSize(140, null)
+                            .setMaxSize(170, null)
+                            .setMinSize(150, null),
                         new UISpacer(3),
                     }),
                     new UISpacer(3)
                 })
         })
+            .onClose(() -> {
+                DataManager.getInstance().save();
+            })    
             .setMinSize(500, 300);
     }
+
+    /*private void setVal(String val) {
+        this.timeGroup.getVal().getTemplate().setVal(val);
+        this.template.setVal(val);
+    }*/
 }

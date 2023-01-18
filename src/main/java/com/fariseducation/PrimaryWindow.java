@@ -1,5 +1,10 @@
 package com.fariseducation;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import com.fariseducation.UIBase.UIWindow;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 import com.fariseducation.UIBase.UITextElements.UIButton;
@@ -8,11 +13,8 @@ import com.fariseducation.UIBase.UITextElements.UITextField;
 import com.fariseducation.Data.Student;
 import com.fariseducation.Data.TimeGroup;
 import com.fariseducation.Data.Tutor;
-
-import java.time.LocalDate;
-
 import com.fariseducation.Data.Guardian;
-import com.fariseducation.Data.Session;
+import com.fariseducation.Data.GuardianshipRelationship;
 import com.fariseducation.Data.ObservedData.DataManager;
 import com.fariseducation.Data.ObservedData.ObservedDatum;
 import com.fariseducation.Data.ObservedData.ObservedGeneric;
@@ -31,14 +33,28 @@ public class PrimaryWindow {
     private ObservedGeneric<TimeGroup> selectedTimeGroup = new ObservedGeneric<TimeGroup>(TimeGroup.BLANK);
     private ObservedGeneric<Student> selectedStudent = new ObservedGeneric<Student>(Student.BLANK);
 
-    //private ObservedLockedList<TimeGroup> timeGroups = DataManager.getInstance().getTimeGroups();
-    //private ObservedLockedList<Student> filteredStudents = DataManager.getInstance().getStudents();
-
     public PrimaryWindow() {
         spawn();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(){
+            @Override
+            public void run() {
+                DataManager.getInstance().save();
+            }
+        });
     }
 
     private void spawn() {
+        UITextField messageBox = new UITextField(
+            new ObservedLiveValue<String>(
+                new ObservedDatum[]{this.selectedTimeGroup, this.selectedStudent}, 
+                () -> {
+                    if(this.selectedStudent.getVal() != Student.BLANK) return this.selectedStudent.getVal().getMessageForTimeGroup(this.selectedTimeGroup.getVal());
+                    else return "";
+                }),
+                true
+        );
+
         new UIWindow("Message Manager", new UIComponent[]{
             new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
                 new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
@@ -97,7 +113,10 @@ public class PrimaryWindow {
                                     return new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                                         new UIButton(val.getName(), true)
                                             .onPress(() -> {
-                                                if(this.selectedTimeGroup.getVal()!=val) this.selectedTimeGroup.setVal(val);
+                                                if(this.selectedTimeGroup.getVal()!=val) {
+                                                    this.selectedTimeGroup.setVal(val);
+                                                    this.selectedStudent.setVal(Student.BLANK);
+                                                }
                                                 else this.selectedTimeGroup.setVal(TimeGroup.BLANK);
                                             }),
                                         new UIIndicator<ObservedGeneric<TimeGroup>>(
@@ -119,11 +138,6 @@ public class PrimaryWindow {
                                     true, 
                                 false, 
                                 1),
-                            /*new UIButton("+")
-                                .onPress(() -> {
-                                    if(this.selectedTimeGroup != null) new StudentEditorWindow();
-                                    else UIAlert.alert("Select a time group to add a student to.");
-                                })*/
                         }),
                         new UISeparator(),
                         new UIScrollContainer(
@@ -198,16 +212,17 @@ public class PrimaryWindow {
                                 .format(false, false, 1),
                             new UISpacer(),
                             new UIButton("Revert to Template")
+                                .onPress(() -> {
+                                    this.selectedStudent.getVal().resetMessageForTimeGroup(this.selectedTimeGroup.getVal());
+                                    messageBox.updateAfterDataChange();
+                                })
                         }),
                         new UIScrollContainer(
                             new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
-                                new UITextField(
-                                    new ObservedLiveValue<String>(
-                                        new ObservedDatum[]{this.selectedTimeGroup, this.selectedStudent}, 
-                                        () -> {
-                                            return "";// + this.selectedStudent.getVal().getMessageForTimeGroup(this.selectedTimeGroup.getVal());
-                                        }),
-                                        true)
+                                messageBox
+                                    .onTyping((String val) -> {
+                                        this.selectedStudent.getVal().setMessageForTimeGroup(this.selectedTimeGroup.getVal(), val);
+                                    })
                             })
                                 .setPreferredSize(100, 500)  
                         )
@@ -215,6 +230,44 @@ public class PrimaryWindow {
                         new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                             new UISpacer(),
                             new UIButton("Send")
+                                .onPress(() -> {
+                                    String emails = "";
+                                    String subject = "";
+                                    String body = this.selectedStudent.getVal().getMessageForTimeGroup(this.selectedTimeGroup.getVal());
+
+                                    //Setup Emails
+                                    for(
+                                        GuardianshipRelationship gr : 
+                                        DataManager.getInstance().getGuardianshipRealtionshipsForStudent(this.selectedStudent)) {
+                                            Guardian g = gr.getGuardian().getVal();
+
+                                            if(g.getSendEmailControl().getVal()) emails += g.getEmail().getVal() + ",";
+                                    }
+                                    emails = emails.substring(0, emails.length()-1);
+
+                                    //Setup Subject
+                                    subject = this.selectedTimeGroup.getVal().getName() +  "%20Message";
+
+                                    //Setup Body
+                                    body = body.replace(" ", "%20");
+                                    body = body.replace("\n", "%0D%0A");
+                                    body = body.replace("\r", "%0D%0A");
+
+                                    Desktop desktop;
+
+                                    if(Desktop.isDesktopSupported() && (desktop = Desktop.getDesktop()).isSupported(Desktop.Action.MAIL)) {
+                                        try {
+                                            URI mailto = new URI("mailto:" + emails + "?subject=" + subject + "&body=" + body);
+
+                                            desktop.mail(mailto);
+                                        } catch (URISyntaxException | IOException e) {
+                                            e.printStackTrace();
+                                            UIAlert.alert("Mail error.");
+                                        }
+                                    } else {
+                                        UIAlert.alert("Mail window not supported.");
+                                    }
+                                })
                                 .setMaxSize(100, null)
                         })
                     }).maximize()
@@ -223,12 +276,4 @@ public class PrimaryWindow {
         })
             .setMinSize(600, 500);
     }
-
-    /*
-    public ObservedLiveList<Guardian> getGuardiansOfSelected() {
-        return ((Student)DataManager.getInstance().getByUUID(selectedStudent.getUUID())).getGuardians();
-    }
-    public ObservedLiveList<Tutor> getTutorsOfSelected() {
-        return ((Student)DataManager.getInstance().getByUUID(selectedStudent.getUUID())).getTutors();
-    }*/
 }

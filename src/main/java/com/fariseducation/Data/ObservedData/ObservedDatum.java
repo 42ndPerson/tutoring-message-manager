@@ -6,20 +6,22 @@ import java.util.ArrayList;
 
 public abstract class ObservedDatum implements Serializable {
     private transient ArrayList<DataObserver> observingComponents = new ArrayList<DataObserver>();
+    private static final long serialVersionUID = 2482894380178106854L;
 
     public void addObserver(DataObserver observer) {
-        System.out.println("Observer Added");
         this.observingComponents.add(observer);
-        System.out.println("Observers: " + this.observingComponents);
     }
     protected void removeObserver(DataObserver observer) {
         this.observingComponents.remove(observer);
     }
     protected void update() {
-        System.out.println("Observers: " + this.observingComponents);
         for (DataObserver observer : this.observingComponents) {
             observer.updateAfterDataChange();
         }
+    }
+
+    public String stringObservers() {
+        return this.observingComponents.toString();
     }
 
     public abstract boolean equals(Object o);

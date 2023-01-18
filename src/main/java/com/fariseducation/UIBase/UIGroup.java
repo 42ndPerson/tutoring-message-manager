@@ -31,14 +31,9 @@ public class UIGroup extends UIComponent {
         this.pane.removeAll();
         this.children.clear();
 
-        System.out.println("NC: " + newComponents.length);
-
         assembleChildren(newComponents);
         this.pane.revalidate();
         this.pane.repaint();
-
-        System.out.println(this.children.size());
-        System.out.println("UIGroup Update");
     }
 
     /**
@@ -47,12 +42,9 @@ public class UIGroup extends UIComponent {
      */
     private void assembleChildren(UIComponent[] components) {
         for(UIComponent component: components) {
-            System.out.println("*****");
             component.inform(this.axis);
             addChild(component);
         }
-
-        System.out.println("CC: " + this.pane.getComponentCount());
     }
     /**
      * @param child

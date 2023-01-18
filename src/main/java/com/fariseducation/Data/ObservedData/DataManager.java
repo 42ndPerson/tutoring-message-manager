@@ -24,7 +24,7 @@ import com.fariseducation.Data.Indexing.TreeNode;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class DataManager implements Serializable {
-    private static final String serializationLoc = "MessageManagerData/DataManager1.ser";
+    private static final String serializationLoc = "MessageManagerData/DataManager.ser";
     private static DataManager instance = null;
 
     private ObservedUnlockedList<Guardian> guardians;
@@ -82,10 +82,10 @@ public class DataManager implements Serializable {
     public void save() {
         try {
             new File("MessageManagerData").mkdirs();
-            new File("MessageManagerData/DataManager.ser").createNewFile();
+            new File(serializationLoc).createNewFile();
 
             FileOutputStream fileOut = new FileOutputStream(
-                "MessageManagerData/DataManager.ser");
+                serializationLoc);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(this);
             out.close();
@@ -124,6 +124,8 @@ public class DataManager implements Serializable {
             if(listRef.get() != null) System.out.println(listRef.get().isMember(datum));
             if(listRef.get() != null && listRef.get().isMember(datum)) listRef.get().addMember(datum);
         }
+
+        this.save();
     }
     public void deleteDatum(ManagedDataSource datum) {
         this.dataLookup.remove(datum.getUUID());
@@ -138,6 +140,8 @@ public class DataManager implements Serializable {
         for(WeakReference<ObservedLiveList> listRef : this.liveLists) {
             if(listRef.get() != null && listRef.get().isMember(datum)) listRef.get().removeMember(datum);
         }
+
+        this.save();
     }
     public boolean datumIsRegistered(ManagedDataSource datum) {
         return
@@ -239,6 +243,14 @@ public class DataManager implements Serializable {
             DataManager.getInstance()::getSessions, 
             (Session session) -> {
                 return timeGroup.getVal().containsSession(session);
+            });
+    }
+    public ObservedLiveList<Session> getSessionsInTimeGroupForStudent(ObservedGeneric<TimeGroup> timeGroup, ObservedGeneric<Student> student) {
+        return new ObservedLiveList<Session>(
+            new ObservedDatum[]{timeGroup},
+            DataManager.getInstance()::getSessions, 
+            (Session session) -> {
+                return timeGroup.getVal().containsSession(session) && session.getStudent().equals(student);
             });
     }
     public ObservedLiveList<Student> getStudentsForTimeGroup(ObservedGeneric<TimeGroup> timeGroup) {

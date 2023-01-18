@@ -15,19 +15,18 @@ public class TimeGroup extends ManagedDataSource {
     private ObservedGeneric<String> name;
     private ObservedDate startDate;
     private ObservedDate endDate;
-    private ObservedGeneric<String> template = new ObservedGeneric<String>("");
+    private ObservedGeneric<String> template;
 
-    private static final long serialVersionUID = -3841962726599067523L; //REMOVE; POTENTIAL ERROR SOURCE
+    //private static final long serialVersionUID = -3841962726599067523L; //REMOVE; POTENTIAL ERROR SOURCE
 
     public TimeGroup(String name, LocalDate startDate, LocalDate endDate) {
-        this.name = new ObservedGeneric<String>(name);
-        this.startDate = new ObservedDate(startDate);
-        this.endDate = new ObservedDate(endDate);
+        this(name, new ObservedDate(startDate), new ObservedDate(endDate));
     }
     public TimeGroup(String name, ObservedDate startDate, ObservedDate endDate) {
         this.name = new ObservedGeneric<String>(name);
         this.startDate = startDate;
         this.endDate = endDate;
+        this.template = new ObservedGeneric<String>("");
     }
 
     public ObservedGeneric<String> getName() {
@@ -68,6 +67,5 @@ public class TimeGroup extends ManagedDataSource {
     
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        this.template = new ObservedGeneric<String>("");
     }
 }

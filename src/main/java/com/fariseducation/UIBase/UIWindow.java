@@ -1,7 +1,8 @@
 package com.fariseducation.UIBase;
 
 import java.awt.Component;
-import java.awt.event.WindowEvent; 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
@@ -30,6 +31,30 @@ public class UIWindow extends UIComponent {
     }
     public UIWindow(String title, UIComponent[] components) {
         this(title, new UIFrameConstraints(1200,600), components);
+    }
+
+    public UIWindow onClose(Runnable action) {
+        this.frame.addWindowListener(new WindowListener(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+                action.run();
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {}
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
+
+        return this;
     }
 
     public void closeWindow() {

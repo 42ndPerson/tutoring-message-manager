@@ -27,6 +27,7 @@ public class DataLoadingWindow {
     private ObservedGeneric<Boolean> fileSelected = new ObservedGeneric<Boolean>(false);
     private ObservedGeneric<Boolean> dataTypeSelected = new ObservedGeneric<Boolean>(false);
     private ObservedGeneric<Boolean> dataLoaded = new ObservedGeneric<Boolean>(false);
+    private ObservedGeneric<Boolean> timeGroupSelected = new ObservedGeneric<Boolean>(false);
 
     private ArrayList<String> dropdownOptions = new ArrayList<>();
 
@@ -81,13 +82,22 @@ public class DataLoadingWindow {
                             new UISpacer(),
                             new UIDropdown<TimeGroup>(
                                 DataManager.getInstance().getTimeGroups(), 
-                                (TimeGroup val) -> {return val.getName().getVal();}),
+                                (TimeGroup val) -> {return val.getName().getVal();}
+                            )
+                                .onSelect((TimeGroup tg) -> {
+                                    if(tg != null) this.timeGroupSelected.setVal(false);
+                                    else this.timeGroupSelected.setVal(true);
+                                }),
                             new UISpacer()
                         }),
-                        new UIButton("Save")
+                        new UIConditionalDisplay(timeGroupSelected, new UIComponent[]{
+                            new UIButton("Save")
+                                .onPress(() -> {this.window.closeWindow();})
+                        })
                     })
                 })
             })
+                .setPreferredSize(null, 5000)
         });
     }
 }

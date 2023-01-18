@@ -10,7 +10,7 @@ import com.fariseducation.UIBase.UIAlert;
 
 public class SpreadsheetReader {
 
-    public static void readAndSave(File file) {
+    public static void readAndSavePeople(File file) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
 
@@ -29,7 +29,7 @@ public class SpreadsheetReader {
 
                 if(lineIndex > 0) {
                     if(getAfterNextComma(getAfterNextComma(line)).charAt(0) == ',') {
-
+                        
                     }
 
 

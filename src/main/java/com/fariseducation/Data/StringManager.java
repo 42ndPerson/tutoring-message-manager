@@ -22,7 +22,7 @@ public class StringManager {
         String[] strings = new String[parts.length];
 
         for(int i = 0; i<parts.length; i++) {
-            strings[i] = s.apply(strings[i]);
+            strings[i] = s.apply(parts[i]);
         }
 
         return listify(strings);

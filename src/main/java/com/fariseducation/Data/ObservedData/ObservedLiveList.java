@@ -76,7 +76,6 @@ public class ObservedLiveList<ContentType> extends ObservedLockedList<ContentTyp
 
     @Override
     public void updateAfterDataChange() {
-        System.out.println("ObservedLiveList Update: " + this.toString());
         build();
     }
 

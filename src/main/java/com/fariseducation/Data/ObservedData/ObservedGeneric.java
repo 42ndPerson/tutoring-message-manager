@@ -14,7 +14,8 @@ public class ObservedGeneric<ContentType> extends ObservedDatum {
     }
     public void setVal(ContentType val) {
         this.val = val;
-        System.out.println("Update: " + val);
+        System.out.println("Update: " + val.toString());
+        System.out.println("Update Object: " + val);
         update();
     }
 

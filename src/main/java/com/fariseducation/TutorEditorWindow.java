@@ -37,8 +37,7 @@ public class TutorEditorWindow {
     private ObservedGeneric<Student> candiateNewSessionStudent = new ObservedGeneric<Student>(null);
     private ObservedGeneric<String> candidateNewSessionDate = new ObservedGeneric<String>("");
     private ObservedGeneric<String> candidateNewSessionDuration = new ObservedGeneric<String>("");
-    //private ObservedUnlockedList<GuardianshipRelationship> newGRBuffer = new ObservedUnlockedList<GuardianshipRelationship>();
-    //private ObservedUnlockedList<Session> newSessionBuffer = new ObservedUnlockedList<Session>();
+    private ObservedGeneric<String> candidateNewSessionRate = new ObservedGeneric<String>("");
 
     public TutorEditorWindow() {
         this.tutor = new Tutor("", "");
@@ -131,8 +130,11 @@ public class TutorEditorWindow {
                                         new UIListBuilder<Session>(
                                             this.sessions, 
                                             (Session session) -> {
-                                                return new UILabel(session.getStudent().getVal().getName())
-                                                    .setMinSize(500, 111);
+                                                return new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                                                        new UILabel(session.getStudent().getVal().getName()),
+                                                        new UISpacer(12)
+                                                    })
+                                                        .setMinSize(500, 111);
                                             }, 
                                             UIAxis.VERTICAL),
                                         new UISpacer()
@@ -143,7 +145,25 @@ public class TutorEditorWindow {
                                         new UIListBuilder<Session>(
                                             this.sessions, 
                                             (Session session) -> {
-                                                return new UILabel(session.getHoursDuration())
+                                                return new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                                                    new UILabel(session.getHoursDuration()),
+                                                    new UISpacer(12)
+                                                })
+                                                    .setMinSize(500, 111);
+                                            }, 
+                                            UIAxis.VERTICAL),
+                                        new UISpacer()
+                                    }),
+                                    new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                                        new UILabel("Hourly Rate")
+                                            .format(false, false, -1),
+                                        new UIListBuilder<Session>(
+                                            this.sessions, 
+                                            (Session session) -> {
+                                                return new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                                                    new UILabel(session.getHourlyRate()),
+                                                    new UISpacer(12)
+                                                })
                                                     .setMinSize(500, 111);
                                             }, 
                                             UIAxis.VERTICAL),
@@ -155,7 +175,10 @@ public class TutorEditorWindow {
                                         new UIListBuilder<Session>(
                                             this.sessions, 
                                             (Session session) -> {
-                                                return new UILabel(session.getDate().toString())
+                                                return new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                                                    new UILabel(session.getDate().toString()),
+                                                    new UISpacer(12)
+                                                })
                                                     .setMinSize(500, 111);
                                             }, 
                                             UIAxis.VERTICAL),
@@ -176,11 +199,11 @@ public class TutorEditorWindow {
                                             UIAxis.VERTICAL),
                                         new UISpacer()
                                     })
-                                }),
+                                })
                             })
                         )
                             .setPreferredSize(5000, 5000),
-                        new UISpacer(),
+                        //new UISpacer(),
                         //New Session
                         new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                             new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
@@ -214,6 +237,18 @@ public class TutorEditorWindow {
                             new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
                                 new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                                     new UISpacer(5),
+                                    new UILabel("Hourly Rate")
+                                        .format(false, false, -1),
+                                    new UISpacer()
+                                }),
+                                new UITextField(this.candidateNewSessionRate, false)
+                                    .onTyping((String val) -> {
+                                        this.candidateNewSessionRate.setVal(val);
+                                    })
+                            }),
+                            new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                                new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                    new UISpacer(5),
                                     new UILabel("Date")
                                         .format(false, false, -1),
                                     new UISpacer()
@@ -235,13 +270,21 @@ public class TutorEditorWindow {
                                             try {
                                                 double validDuration = Double.parseDouble(this.candidateNewSessionDuration.getVal());
 
-                                                DataManager.getInstance().registerDatum(
-                                                    new Session(
-                                                        this.candiateNewSessionStudent.getVal(), 
-                                                        this.tutor, 
-                                                        validDate,
-                                                        validDuration)
-                                                );
+                                                try {
+                                                    double validRate = Double.parseDouble(this.candidateNewSessionRate.getVal());
+
+                                                    DataManager.getInstance().registerDatum(
+                                                        new Session(
+                                                            this.candiateNewSessionStudent.getVal(), 
+                                                            this.tutor, 
+                                                            validDate,
+                                                            validDuration,
+                                                            validRate)
+                                                    );
+
+                                                } catch (NumberFormatException e) {
+                                                    UIAlert.alert("Invalid Rate ");
+                                                }
                                             } catch (NumberFormatException e) {
                                                 UIAlert.alert("Invalid Duration");
                                             }

@@ -38,6 +38,7 @@ public class StudentEditorWindow {
     private ObservedGeneric<Tutor> candiateNewSessionTutor = new ObservedGeneric<Tutor>(null);
     private ObservedGeneric<String> candidateNewSessionDate = new ObservedGeneric<String>("");
     private ObservedGeneric<String> candidateNewSessionDuration = new ObservedGeneric<String>("");
+    private ObservedGeneric<String> candidateNewSessionRate = new ObservedGeneric<String>("");
     //private ObservedUnlockedList<GuardianshipRelationship> newGRBuffer = new ObservedUnlockedList<GuardianshipRelationship>();
     //private ObservedUnlockedList<Session> newSessionBuffer = new ObservedUnlockedList<Session>();
 
@@ -180,6 +181,18 @@ public class StudentEditorWindow {
                                             new UISpacer()
                                         }),
                                         new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                                            new UILabel("Hourly Rate")
+                                                .format(false, false, -1),
+                                            new UIListBuilder<Session>(
+                                                this.sessions, 
+                                                (Session session) -> {
+                                                    return new UILabel(session.getHourlyRate())
+                                                        .setMaxSize(500, 111);
+                                                }, 
+                                                UIAxis.VERTICAL),
+                                            new UISpacer()
+                                        }),
+                                        new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
                                             new UILabel("Date")
                                                 .format(false, false, -1),
                                             new UIListBuilder<Session>(
@@ -242,6 +255,18 @@ public class StudentEditorWindow {
                                 new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
                                     new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
                                         new UISpacer(5),
+                                        new UILabel("Hourly Rate")
+                                            .format(false, false, -1),
+                                        new UISpacer()
+                                    }),
+                                    new UITextField(this.candidateNewSessionRate, false)
+                                        .onTyping((String val) -> {
+                                            this.candidateNewSessionRate.setVal(val);
+                                        })
+                                }),
+                                new UIGroup(UIAxis.VERTICAL, new UIComponent[]{
+                                    new UIGroup(UIAxis.HORIZONTAL, new UIComponent[]{
+                                        new UISpacer(5),
                                         new UILabel("Date")
                                             .format(false, false, -1),
                                         new UISpacer()
@@ -263,13 +288,21 @@ public class StudentEditorWindow {
                                                 try {
                                                     double validDuration = Double.parseDouble(this.candidateNewSessionDuration.getVal());
     
-                                                    DataManager.getInstance().registerDatum(
-                                                        new Session(
-                                                            this.student, 
-                                                            this.candiateNewSessionTutor.getVal(), 
-                                                            validDate,
-                                                            validDuration)
-                                                    );
+                                                    try {
+                                                        double validRate = Double.parseDouble(this.candidateNewSessionRate.getVal());
+
+                                                        DataManager.getInstance().registerDatum(
+                                                            new Session(
+                                                                this.student, 
+                                                                this.candiateNewSessionTutor.getVal(), 
+                                                                validDate,
+                                                                validDuration,
+                                                                validRate)
+                                                        );
+
+                                                    } catch (NumberFormatException e) {
+                                                        UIAlert.alert("Invalid Rate");
+                                                    }
                                                 } catch (NumberFormatException e) {
                                                     UIAlert.alert("Invalid Duration");
                                                 }

@@ -6,6 +6,7 @@ import com.fariseducation.UIBase.UIComponent;
 import com.fariseducation.UIBase.UIGroup;
 import com.fariseducation.UIBase.UIEnums.UIAxis;
 
+@SuppressWarnings("rawtypes")
 public abstract class UITextElement extends UIComponent implements DataObserver {
     private ObservedGeneric observed = null;
     private UITextFormat format = new UITextFormat(false, false, 0, false);
